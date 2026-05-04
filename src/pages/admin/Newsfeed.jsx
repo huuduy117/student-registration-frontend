@@ -2,8 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, Plus, Search, Edit, Trash2, X, Send, Users, GraduationCap, Globe } from 'lucide-react';
-import axios from "axios";
+import {
+  MessageSquare,
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  X,
+  Send,
+  Users,
+  GraduationCap,
+  Globe,
+} from "lucide-react";
+import axiosInstance from "../../services/axios";
 import SideBar from "../../components/sideBar";
 import "../../assets/UserManagement.css";
 
@@ -37,14 +48,10 @@ const AdminNewsfeed = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
 
-      const res = await axios.get("/api/admin/newsfeed", {
-        headers: {
-          Authorization: `Bearer ${authData.token}`,
-        },
-      });
+      const res = await axiosInstance.get("/api/admin/newsfeed");
 
       const arr = Array.isArray(res.data) ? res.data : [];
       setNews(
@@ -58,13 +65,13 @@ const AdminNewsfeed = () => {
             item.loaiNguoiDung === "TatCa"
               ? "Tất cả"
               : item.loaiNguoiDung === "SinhVien"
-              ? "Sinh viên"
-              : item.loaiNguoiDung === "GiangVien"
-              ? "Giảng viên"
-              : item.loaiNguoiDung,
+                ? "Sinh viên"
+                : item.loaiNguoiDung === "GiangVien"
+                  ? "Giảng viên"
+                  : item.loaiNguoiDung,
           recipient:
             item.loaiNguoiDung === "TatCa" ? "all" : item.loaiNguoiDung,
-        }))
+        })),
       );
     } catch (err) {
       console.error("Error fetching newsfeed:", err);
@@ -83,7 +90,7 @@ const AdminNewsfeed = () => {
             content: item.content,
             recipient: item.recipient,
           }
-        : { title: "", content: "", recipient: "all" }
+        : { title: "", content: "", recipient: "all" },
     );
     setOpenDialog(true);
   };
@@ -112,22 +119,14 @@ const AdminNewsfeed = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
 
       if (editNews) {
-        await axios.put(`/api/admin/newsfeed/${editNews.id}`, form, {
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        });
+        await axiosInstance.put(`/api/admin/newsfeed/${editNews.id}`, form);
         setSuccess("Cập nhật bảng tin thành công");
       } else {
-        await axios.post("/api/admin/newsfeed", form, {
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        });
+        await axiosInstance.post("/api/admin/newsfeed", form);
         setSuccess("Tạo bảng tin thành công");
       }
 
@@ -150,14 +149,10 @@ const AdminNewsfeed = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
 
-      await axios.delete(`/api/admin/newsfeed/${id}`, {
-        headers: {
-          Authorization: `Bearer ${authData.token}`,
-        },
-      });
+      await axiosInstance.delete(`/api/admin/newsfeed/${id}`);
       setSuccess("Xóa bảng tin thành công");
       fetchNews();
     } catch (err) {
@@ -169,13 +164,14 @@ const AdminNewsfeed = () => {
   };
 
   const getRecipientInfo = (recipient) => {
-    const info = RECIPIENTS.find(r => r.value === recipient);
+    const info = RECIPIENTS.find((r) => r.value === recipient);
     return info || { label: recipient, icon: Globe };
   };
 
-  const filteredNews = news.filter(item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.content.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredNews = news.filter(
+    (item) =>
+      item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.content.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -189,7 +185,9 @@ const AdminNewsfeed = () => {
           transition={{ duration: 0.6 }}
         >
           <h1 className="admin-title">Quản lý bảng tin</h1>
-          <p className="admin-subtitle">Tạo và quản lý thông báo cho hệ thống</p>
+          <p className="admin-subtitle">
+            Tạo và quản lý thông báo cho hệ thống
+          </p>
         </motion.div>
 
         {error && (
@@ -201,7 +199,7 @@ const AdminNewsfeed = () => {
             {error}
           </motion.div>
         )}
-        
+
         {success && (
           <motion.div
             className="alert success"
@@ -272,12 +270,25 @@ const AdminNewsfeed = () => {
             animate={{ opacity: 1 }}
           >
             <MessageSquare size={64} color="var(--color-border)" />
-            <h3 style={{ color: "var(--color-text-secondary)", marginTop: "1rem" }}>Chưa có bảng tin nào</h3>
-            <p style={{ color: "var(--color-text-muted)" }}>Tạo thông báo đầu tiên để bắt đầu</p>
+            <h3
+              style={{
+                color: "var(--color-text-secondary)",
+                marginTop: "1rem",
+              }}
+            >
+              Chưa có bảng tin nào
+            </h3>
+            <p style={{ color: "var(--color-text-muted)" }}>
+              Tạo thông báo đầu tiên để bắt đầu
+            </p>
           </motion.div>
         ) : (
           <motion.div
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '1.5rem' }}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+              gap: "1.5rem",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -285,7 +296,7 @@ const AdminNewsfeed = () => {
             {filteredNews.map((item, index) => {
               const recipientInfo = getRecipientInfo(item.recipient);
               const IconComponent = recipientInfo.icon;
-              
+
               return (
                 <motion.div
                   key={item.id}
@@ -294,35 +305,66 @@ const AdminNewsfeed = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
-                  style={{ height: 'fit-content' }}
+                  style={{ height: "fit-content" }}
                 >
                   <div className="stat-header">
-                    <div className="stat-title" style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--color-text-primary)' }}>
+                    <div
+                      className="stat-title"
+                      style={{
+                        fontSize: "1rem",
+                        fontWeight: "600",
+                        color: "var(--color-text-primary)",
+                      }}
+                    >
                       {item.title}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                      }}
+                    >
                       <IconComponent size={16} color="var(--color-primary)" />
-                      <span style={{ fontSize: '0.8rem', color: 'var(--color-primary)', fontWeight: '500' }}>
+                      <span
+                        style={{
+                          fontSize: "0.8rem",
+                          color: "var(--color-primary)",
+                          fontWeight: "500",
+                        }}
+                      >
                         {recipientInfo.label}
                       </span>
                     </div>
                   </div>
-                  
-                  <div style={{ margin: '1rem 0', color: 'var(--color-text-secondary)', lineHeight: '1.5' }}>
+
+                  <div
+                    style={{
+                      margin: "1rem 0",
+                      color: "var(--color-text-secondary)",
+                      lineHeight: "1.5",
+                    }}
+                  >
                     {item.content.length > 120
                       ? `${item.content.substring(0, 120)}...`
                       : item.content}
                   </div>
-                  
-                  <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
+
+                  <div
+                    style={{
+                      fontSize: "0.85rem",
+                      color: "var(--color-text-muted)",
+                      marginBottom: "1rem",
+                    }}
+                  >
                     Đăng bởi: <strong>{item.author}</strong> • {item.time}
                   </div>
-                  
-                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+
+                  <div style={{ display: "flex", gap: "0.5rem" }}>
                     <button
                       className="modern-btn secondary"
                       onClick={() => handleOpenDialog(item)}
-                      style={{ flex: 1, fontSize: '0.85rem' }}
+                      style={{ flex: 1, fontSize: "0.85rem" }}
                     >
                       <Edit size={16} />
                       Sửa
@@ -330,7 +372,7 @@ const AdminNewsfeed = () => {
                     <button
                       className="modern-btn danger"
                       onClick={() => handleDelete(item.id)}
-                      style={{ flex: 1, fontSize: '0.85rem' }}
+                      style={{ flex: 1, fontSize: "0.85rem" }}
                     >
                       <Trash2 size={16} />
                       Xóa
@@ -355,15 +397,26 @@ const AdminNewsfeed = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
-                style={{ maxWidth: '600px' }}
+                style={{ maxWidth: "600px" }}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <h2 style={{ margin: 0, color: "var(--color-text-primary)" }}>
                     {editNews ? "Sửa thông báo" : "Tạo thông báo mới"}
                   </h2>
                   <button
                     onClick={handleCloseDialog}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer' }}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
                   >
                     <X size={24} color="var(--color-text-secondary)" />
                   </button>
@@ -394,7 +447,7 @@ const AdminNewsfeed = () => {
                     disabled={loading}
                     required
                     placeholder="Nhập nội dung thông báo..."
-                    style={{ resize: 'vertical', minHeight: '120px' }}
+                    style={{ resize: "vertical", minHeight: "120px" }}
                   />
                 </div>
 
@@ -415,7 +468,14 @@ const AdminNewsfeed = () => {
                   </select>
                 </div>
 
-                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'flex-end', marginTop: '2rem' }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "1rem",
+                    justifyContent: "flex-end",
+                    marginTop: "2rem",
+                  }}
+                >
                   <button
                     className="modern-btn secondary"
                     onClick={handleCloseDialog}

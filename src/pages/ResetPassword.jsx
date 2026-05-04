@@ -1,135 +1,141 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useNavigate, useSearchParams, Link } from "react-router-dom"
-import { FaLock, FaExclamationTriangle } from "react-icons/fa"
-import axios from "axios"
-import "../assets/Login.css"
-import "../assets/ForgotPassword.css"
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { FaLock, FaExclamationTriangle } from "react-icons/fa";
+import axiosInstance from "../services/axios";
+import "../assets/Login.css";
+import "../assets/ForgotPassword.css";
 
 const ResetPassword = () => {
-  const [searchParams] = useSearchParams()
-  const token = searchParams.get("token")
-  const navigate = useNavigate()
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  const navigate = useNavigate();
 
-  const [newPassword, setNewPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [loading, setLoading] = useState(false)
-  const [verifying, setVerifying] = useState(true)
-  const [error, setError] = useState("")
-  const [success, setSuccess] = useState(false)
-  const [tokenValid, setTokenValid] = useState(false)
-  const [remainingMinutes, setRemainingMinutes] = useState(0)
-  const [countdown, setCountdown] = useState(0)
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [verifying, setVerifying] = useState(true);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const [tokenValid, setTokenValid] = useState(false);
+  const [remainingMinutes, setRemainingMinutes] = useState(0);
+  const [countdown, setCountdown] = useState(0);
 
   // Verify token on component mount
   useEffect(() => {
     const verifyToken = async () => {
       if (!token) {
-        setError("Token không hợp lệ")
-        setVerifying(false)
-        return
+        setError("Token không hợp lệ");
+        setVerifying(false);
+        return;
       }
 
       try {
-        const response = await axios.get(`/api/password-reset/verify/${token}`)
-        setTokenValid(true)
-        setRemainingMinutes(response.data.remainingMinutes)
-        setCountdown(response.data.remainingMinutes * 60) // Convert to seconds
+        const response = await axiosInstance.get(
+          `/api/password-reset/verify/${token}`,
+        );
+        setTokenValid(true);
+        setRemainingMinutes(response.data.remainingMinutes);
+        setCountdown(response.data.remainingMinutes * 60); // Convert to seconds
       } catch (err) {
-        console.error("Token verification error:", err)
-        setError(err.response?.data?.message || "Token không hợp lệ hoặc đã hết hạn")
+        console.error("Token verification error:", err);
+        setError(
+          err.response?.data?.message || "Token không hợp lệ hoặc đã hết hạn",
+        );
       } finally {
-        setVerifying(false)
+        setVerifying(false);
       }
-    }
+    };
 
-    verifyToken()
-  }, [token])
+    verifyToken();
+  }, [token]);
 
   // Countdown timer
   useEffect(() => {
-    if (!tokenValid || countdown <= 0) return
+    if (!tokenValid || countdown <= 0) return;
 
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
-          clearInterval(timer)
-          setTokenValid(false)
-          setError("Thời gian đặt lại mật khẩu đã hết. Vui lòng yêu cầu lại.")
-          return 0
+          clearInterval(timer);
+          setTokenValid(false);
+          setError("Thời gian đặt lại mật khẩu đã hết. Vui lòng yêu cầu lại.");
+          return 0;
         }
-        return prev - 1
-      })
-    }, 1000)
+        return prev - 1;
+      });
+    }, 1000);
 
-    return () => clearInterval(timer)
-  }, [tokenValid, countdown])
+    return () => clearInterval(timer);
+  }, [tokenValid, countdown]);
 
   // Format countdown time
   const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60)
-    const secs = seconds % 60
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`
-  }
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
 
   const validatePassword = (password) => {
     if (password.length < 8) {
-      return "Mật khẩu phải có ít nhất 8 ký tự"
+      return "Mật khẩu phải có ít nhất 8 ký tự";
     }
 
     if (!/[a-z]/.test(password)) {
-      return "Mật khẩu phải có ít nhất một chữ cái thường"
+      return "Mật khẩu phải có ít nhất một chữ cái thường";
     }
 
     if (!/[A-Z]/.test(password)) {
-      return "Mật khẩu phải có ít nhất một chữ cái hoa"
+      return "Mật khẩu phải có ít nhất một chữ cái hoa";
     }
 
     if (!/[0-9]/.test(password)) {
-      return "Mật khẩu phải có ít nhất một chữ số"
+      return "Mật khẩu phải có ít nhất một chữ số";
     }
 
-    return null
-  }
+    return null;
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     // Validate passwords
-    const passwordError = validatePassword(newPassword)
+    const passwordError = validatePassword(newPassword);
     if (passwordError) {
-      setError(passwordError)
-      return
+      setError(passwordError);
+      return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError("Mật khẩu xác nhận không khớp")
-      return
+      setError("Mật khẩu xác nhận không khớp");
+      return;
     }
 
-    setLoading(true)
-    setError("")
+    setLoading(true);
+    setError("");
 
     try {
-      await axios.post("/api/password-reset/reset", {
+      await axiosInstance.post("/api/password-reset/reset", {
         token,
         newPassword,
-      })
+      });
 
-      setSuccess(true)
+      setSuccess(true);
 
       // Redirect to login after 3 seconds
       setTimeout(() => {
-        navigate("/login")
-      }, 3000)
+        navigate("/login");
+      }, 3000);
     } catch (err) {
-      console.error("Password reset error:", err)
-      setError(err.response?.data?.message || "Đã có lỗi xảy ra khi đặt lại mật khẩu")
+      console.error("Password reset error:", err);
+      setError(
+        err.response?.data?.message || "Đã có lỗi xảy ra khi đặt lại mật khẩu",
+      );
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   if (verifying) {
     return (
@@ -147,7 +153,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (success) {
@@ -159,7 +165,9 @@ const ResetPassword = () => {
               <span className="check-icon">✓</span>
             </div>
             <h1 className="login-title">Thành công!</h1>
-            <p className="login-subtitle">Mật khẩu của bạn đã được đặt lại thành công</p>
+            <p className="login-subtitle">
+              Mật khẩu của bạn đã được đặt lại thành công
+            </p>
           </div>
           <div className="success-container">
             <p>Bạn sẽ được chuyển hướng đến trang đăng nhập sau vài giây...</p>
@@ -169,7 +177,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (!tokenValid) {
@@ -181,7 +189,9 @@ const ResetPassword = () => {
               <FaExclamationTriangle />
             </div>
             <h1 className="login-title">Token không hợp lệ</h1>
-            <p className="login-subtitle">{error || "Token đã hết hạn hoặc không tồn tại"}</p>
+            <p className="login-subtitle">
+              {error || "Token đã hết hạn hoặc không tồn tại"}
+            </p>
           </div>
           <div className="error-container">
             <p>Vui lòng yêu cầu đặt lại mật khẩu mới.</p>
@@ -191,7 +201,7 @@ const ResetPassword = () => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -207,7 +217,8 @@ const ResetPassword = () => {
 
         <div className="countdown-timer">
           <p>
-            Thời gian còn lại: <span className="countdown">{formatTime(countdown)}</span>
+            Thời gian còn lại:{" "}
+            <span className="countdown">{formatTime(countdown)}</span>
           </p>
         </div>
 
@@ -245,16 +256,28 @@ const ResetPassword = () => {
           <div className="password-requirements">
             <p>Mật khẩu phải:</p>
             <ul>
-              <li className={newPassword.length >= 8 ? "met" : ""}>Có ít nhất 8 ký tự</li>
-              <li className={/[a-z]/.test(newPassword) ? "met" : ""}>Có ít nhất một chữ cái thường</li>
-              <li className={/[A-Z]/.test(newPassword) ? "met" : ""}>Có ít nhất một chữ cái hoa</li>
-              <li className={/[0-9]/.test(newPassword) ? "met" : ""}>Có ít nhất một chữ số</li>
+              <li className={newPassword.length >= 8 ? "met" : ""}>
+                Có ít nhất 8 ký tự
+              </li>
+              <li className={/[a-z]/.test(newPassword) ? "met" : ""}>
+                Có ít nhất một chữ cái thường
+              </li>
+              <li className={/[A-Z]/.test(newPassword) ? "met" : ""}>
+                Có ít nhất một chữ cái hoa
+              </li>
+              <li className={/[0-9]/.test(newPassword) ? "met" : ""}>
+                Có ít nhất một chữ số
+              </li>
             </ul>
           </div>
 
           {error && <div className="error-message">{error}</div>}
 
-          <button type="submit" disabled={loading} className={`login-button ${loading ? "loading" : ""}`}>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`login-button ${loading ? "loading" : ""}`}
+          >
             {loading ? "Đang xử lý..." : "Đặt lại mật khẩu"}
           </button>
 
@@ -268,7 +291,7 @@ const ResetPassword = () => {
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ResetPassword
+export default ResetPassword;

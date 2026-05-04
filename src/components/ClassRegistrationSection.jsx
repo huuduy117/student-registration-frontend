@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../services/axios";
 import ClassRequestTicket from "./Chat/ClassRequestTicket";
 import JoinClassForm from "./Chat/JoinClassForm";
 import ParticipantsList from "./Chat/ParticipantsList";
@@ -32,15 +32,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
   const fetchClassRequests = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("/api/class-requests", {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(
-              sessionStorage.getItem(`auth_${sessionStorage.getItem("tabId")}`)
-            ).token
-          }`,
-        },
-      });
+      const response = await axiosInstance.get("/api/class-requests");
       setClassRequests(response.data);
     } catch (error) {
       console.error("Error fetching class requests:", error);
@@ -51,15 +43,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
 
   const fetchAvailableCourses = async () => {
     try {
-      await axios.get("/api/class-requests/available-courses", {
-        headers: {
-          Authorization: `Bearer ${
-            JSON.parse(
-              sessionStorage.getItem(`auth_${sessionStorage.getItem("tabId")}`)
-            ).token
-          }`,
-        },
-      });
+      await axiosInstance.get("/api/class-requests/available-courses");
     } catch (error) {
       console.error("Error fetching available courses:", error);
     }
@@ -77,24 +61,10 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
       const sectionId = request?.course_sections?.id;
       if (!sectionId) return alert("Lớp học phần chưa được khởi tạo");
 
-      const response = await axios.post(
-        "/api/class-requests/join",
-        {
-          studentId: userId,
-          sectionId: sectionId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${
-              JSON.parse(
-                sessionStorage.getItem(
-                  `auth_${sessionStorage.getItem("tabId")}`
-                )
-              ).token
-            }`,
-          },
-        }
-      );
+      const response = await axiosInstance.post("/api/class-requests/join", {
+        studentId: userId,
+        sectionId: sectionId,
+      });
 
       // Refresh the class requests
       fetchClassRequests();
@@ -120,19 +90,8 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
       const sectionId = request?.course_sections?.id;
       if (!sectionId) return alert("Lớp học phần chưa được khởi tạo");
 
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `/api/class-requests/${sectionId}/participants`,
-        {
-          headers: {
-            Authorization: `Bearer ${
-              JSON.parse(
-                sessionStorage.getItem(
-                  `auth_${sessionStorage.getItem("tabId")}`
-                )
-              ).token
-            }`,
-          },
-        }
       );
 
       if (request) {
@@ -161,19 +120,8 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
       const sectionId = request?.course_sections?.id;
       if (!sectionId) return alert("Lớp học phần chưa được khởi tạo");
 
-      const participantsResponse = await axios.get(
+      const participantsResponse = await axiosInstance.get(
         `/api/class-requests/${sectionId}/participants`,
-        {
-          headers: {
-            Authorization: `Bearer ${
-              JSON.parse(
-                sessionStorage.getItem(
-                  `auth_${sessionStorage.getItem("tabId")}`
-                )
-              ).token
-            }`,
-          },
-        }
       );
 
       if (request) {
@@ -212,24 +160,11 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
         return;
       }
 
-      const response = await axios.post(
-        "/api/class-requests/join",
-        {
-          studentId: userId,
-          sectionId: selectedRequest?.sectionId || joinData.id || joinData.maLopHP,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${
-              JSON.parse(
-                sessionStorage.getItem(
-                  `auth_${sessionStorage.getItem("tabId")}`
-                )
-              ).token
-            }`,
-          },
-        }
-      );
+      const response = await axiosInstance.post("/api/class-requests/join", {
+        studentId: userId,
+        sectionId:
+          selectedRequest?.sectionId || joinData.id || joinData.maLopHP,
+      });
 
       // Refresh the class requests
       fetchClassRequests();
@@ -302,7 +237,8 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
                     request={{
                       id: request.id,
                       courseName: request.courses?.name || request.course_id,
-                      creatorName: request.students?.full_name || request.student_id,
+                      creatorName:
+                        request.students?.full_name || request.student_id,
                       creatorStudentId: request.student_id,
                       semester: request.course_sections?.semester || "",
                       batch: request.course_sections?.academic_year || "",
@@ -328,7 +264,8 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
                   request={{
                     id: request.id,
                     courseName: request.courses?.name || request.course_id,
-                    creatorName: request.students?.full_name || request.student_id,
+                    creatorName:
+                      request.students?.full_name || request.student_id,
                     creatorStudentId: request.student_id,
                     semester: request.course_sections?.semester || "",
                     batch: request.course_sections?.academic_year || "",

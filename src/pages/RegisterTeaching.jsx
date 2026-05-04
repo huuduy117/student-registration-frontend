@@ -1,15 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import {
-  Calendar,
-  Book,
-  Users,
-  Search,
-  Filter,
-  X,
-} from "lucide-react";
+import axiosInstance from "../services/axios";
+import { Calendar, Book, Users, Search, Filter, X } from "lucide-react";
 import SideBar from "../components/sideBar";
 import "../assets/RegisterTeaching.css";
 
@@ -34,7 +27,7 @@ const RegisterTeaching = () => {
   useEffect(() => {
     const tabId = sessionStorage.getItem("tabId");
     const authData = JSON.parse(
-      sessionStorage.getItem(`auth_${tabId}`) || "{}"
+      sessionStorage.getItem(`auth_${tabId}`) || "{}",
     );
     if (authData.userId) {
       setTeacherId(authData.userId);
@@ -45,13 +38,8 @@ const RegisterTeaching = () => {
   const fetchApprovedClasses = async (token) => {
     try {
       setLoading(true);
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `/api/teaching/class-sections/approved`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
       );
       setApprovedClasses(response.data || []);
     } catch (err) {
@@ -68,28 +56,20 @@ const RegisterTeaching = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
-      await axios.post(
-        "/api/teaching/register-teaching",
-        {
-          maGV: teacherId,
-          maLopHP: classId,
-          ngayDangKy: new Date().toISOString().split("T")[0],
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        }
-      );
+      await axiosInstance.post("/api/teaching/register-teaching", {
+        maGV: teacherId,
+        maLopHP: classId,
+        ngayDangKy: new Date().toISOString().split("T")[0],
+      });
 
       setSuccess("Đăng ký giảng dạy thành công!");
       fetchApprovedClasses(authData.token);
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Đăng ký không thành công. Vui lòng thử lại."
+          "Đăng ký không thành công. Vui lòng thử lại.",
       );
       console.error("Error registering:", err);
     }
@@ -103,24 +83,21 @@ const RegisterTeaching = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
 
-      const response = await axios.get(
+      const response = await axiosInstance.get(
         `/api/teaching/class-sections/${classItem.maLopHP}/time-slots`,
         {
           params: { maGV: teacherId },
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        }
+        },
       );
 
       setAvailableTimeSlots(response.data.availableSlots);
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Không thể lấy danh sách khung giờ trống. Vui lòng thử lại."
+          "Không thể lấy danh sách khung giờ trống. Vui lòng thử lại.",
       );
       setShowTimeSlotModal(false);
     } finally {
@@ -141,24 +118,16 @@ const RegisterTeaching = () => {
     try {
       const tabId = sessionStorage.getItem("tabId");
       const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}"
+        sessionStorage.getItem(`auth_${tabId}`) || "{}",
       );
 
-      await axios.post(
-        "/api/teaching/register-teaching",
-        {
-          maGV: teacherId,
-          maLopHP: selectedClass.maLopHP,
-          ngayDangKy: new Date().toISOString().split("T")[0],
-          thu: selectedTimeSlot.thu,
-          tietHoc: selectedTimeSlot.tietHoc,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${authData.token}`,
-          },
-        }
-      );
+      await axiosInstance.post("/api/teaching/register-teaching", {
+        maGV: teacherId,
+        maLopHP: selectedClass.maLopHP,
+        ngayDangKy: new Date().toISOString().split("T")[0],
+        thu: selectedTimeSlot.thu,
+        tietHoc: selectedTimeSlot.tietHoc,
+      });
 
       setSuccess("Đăng ký giảng dạy thành công!");
       setShowTimeSlotModal(false);
@@ -167,7 +136,7 @@ const RegisterTeaching = () => {
     } catch (err) {
       setError(
         err.response?.data?.message ||
-          "Đăng ký không thành công. Vui lòng thử lại."
+          "Đăng ký không thành công. Vui lòng thử lại.",
       );
     }
   };
@@ -185,12 +154,13 @@ const RegisterTeaching = () => {
   const uniqueYears = [...new Set(approvedClasses.map((c) => c.namHoc))];
 
   const filteredTimeSlots = showTeacherScheduleOnly
-    ? availableTimeSlots.filter(slot => 
-        !availableTimeSlots.occupiedSlots?.teacherSlots?.some(
-          teacherSlot => 
-            teacherSlot.thu === slot.thu && 
-            teacherSlot.tietHoc === slot.tietHoc
-        )
+    ? availableTimeSlots.filter(
+        (slot) =>
+          !availableTimeSlots.occupiedSlots?.teacherSlots?.some(
+            (teacherSlot) =>
+              teacherSlot.thu === slot.thu &&
+              teacherSlot.tietHoc === slot.tietHoc,
+          ),
       )
     : availableTimeSlots;
 
@@ -204,7 +174,8 @@ const RegisterTeaching = () => {
             <p>
               Đăng ký phân công giảng dạy cho các lớp học phần đã được duyệt
             </p>
-          </div>          {error && (
+          </div>{" "}
+          {error && (
             <div className="alert error-alert">
               <span className="alert-icon">⚠️</span>
               {error}
@@ -213,7 +184,6 @@ const RegisterTeaching = () => {
               </button>
             </div>
           )}
-
           {success && (
             <div className="alert success-alert">
               <span className="alert-icon">✓</span>
@@ -223,7 +193,6 @@ const RegisterTeaching = () => {
               </button>
             </div>
           )}
-
           <div className="filters-section">
             <div className="filter-group">
               <div className="filter-input-wrapper">
@@ -276,7 +245,6 @@ const RegisterTeaching = () => {
               </div>
             </div>
           </div>
-
           {loading ? (
             <div className="loading-spinner">Đang tải dữ liệu...</div>
           ) : filteredClasses.length === 0 ? (
@@ -357,9 +325,12 @@ const RegisterTeaching = () => {
                     <input
                       type="checkbox"
                       checked={showTeacherScheduleOnly}
-                      onChange={(e) => setShowTeacherScheduleOnly(e.target.checked)}
+                      onChange={(e) =>
+                        setShowTeacherScheduleOnly(e.target.checked)
+                      }
                     />
-                    Chỉ hiển thị khung giờ không trùng với lịch giảng dạy của tôi
+                    Chỉ hiển thị khung giờ không trùng với lịch giảng dạy của
+                    tôi
                   </label>
                 </div>
 
@@ -373,17 +344,19 @@ const RegisterTeaching = () => {
                         <div className="time-slots-grid">
                           {dayGroup.slots.map((period) => {
                             const slot = { thu: dayGroup.thu, tietHoc: period };
-                            const isSelected = 
-                              selectedTimeSlot?.thu === slot.thu && 
+                            const isSelected =
+                              selectedTimeSlot?.thu === slot.thu &&
                               selectedTimeSlot?.tietHoc === slot.tietHoc;
-                            
+
                             return (
                               <div
                                 key={`${slot.thu}-${slot.tietHoc}`}
                                 className={`time-slot-card ${isSelected ? "selected" : ""}`}
                                 onClick={() => handleTimeSlotSelect(slot)}
                               >
-                                <div className="time-slot-period">Tiết {slot.tietHoc}</div>
+                                <div className="time-slot-period">
+                                  Tiết {slot.tietHoc}
+                                </div>
                               </div>
                             );
                           })}

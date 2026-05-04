@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "../services/axios";
+import { API_URL, WS_URL } from "../config/config";
 
 const useChatSocket = (roomId) => {
   const socket = useRef(null);
@@ -11,9 +12,7 @@ const useChatSocket = (roomId) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axios.get(
-        `http://localhost:5000/api/chat/history/${roomId}`
-      );
+      const response = await axiosInstance.get(`/api/chat/history/${roomId}`);
       if (Array.isArray(response.data)) {
         setMessages(response.data);
       } else {
@@ -36,7 +35,7 @@ const useChatSocket = (roomId) => {
 
     fetchChatHistory(roomId);
 
-    socket.current = new WebSocket(`ws://localhost:5000/chat/${roomId}`);
+    socket.current = new WebSocket(`${WS_URL}/chat/${roomId}`);
 
     socket.current.onopen = () => {
       console.log(`Connected to chat room ${roomId}`);
