@@ -6,7 +6,7 @@
 
 .captcha-container h3 {
   font-size: 16px;
-  color: #333;
+  color: #FFFFFF;
   margin: 0;
 }
 
@@ -17,20 +17,21 @@
 }
 
 .captcha-text {
-  background-color: #f0f2f5;
+  background-color: #333333;
   padding: 12px 15px;
   border-radius: 6px;
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #1DB954;
   letter-spacing: 1px;
   flex-grow: 1;
   text-align: center;
+  border: 1px solid #404040;
 }
 
 .refresh-button {
-  background-color: #f0f2f5;
-  border: none;
+  background-color: #333333;
+  border: 1px solid #404040;
   border-radius: 6px;
   width: 40px;
   height: 40px;
@@ -39,11 +40,14 @@
   justify-content: center;
   cursor: pointer;
   font-size: 18px;
-  transition: background-color 0.3s;
+  transition: all 0.2s;
+  color: #1DB954;
 }
 
 .refresh-button:hover {
-  background-color: #e4e6e9;
+  background-color: #1DB954;
+  color: #121212;
+  border-color: #1DB954;
 }
 
 .captcha-input-group {
@@ -54,39 +58,44 @@
 .captcha-input {
   flex-grow: 1;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #333333;
   border-radius: 6px;
   font-size: 14px;
-  transition: all 0.3s;
+  transition: all 0.2s;
+  background: #333333;
+  color: #FFFFFF;
 }
 
 .captcha-input:focus {
-  border-color: #9854cb;
+  border-color: #1DB954;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
 }
 
 .captcha-input.verified {
-  border-color: #4caf50;
-  background-color: #f1f8e9;
+  border-color: #1DB954;
+  background-color: rgba(29, 185, 84, 0.1);
 }
 
 .verify-button {
   padding: 10px 15px;
-  background-color: #9854cb;
-  color: white;
+  background-color: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s;
+  font-weight: 600;
 }
 
 .verify-button:hover:not(:disabled) {
-  background-color: #8445b9;
+  background-color: #1ed760;
 }
 
 .verify-button:disabled {
-  background-color: #ccc;
+  background-color: #3A3A3A;
+  color: #777777;
   cursor: not-allowed;
 }
 
@@ -94,13 +103,14 @@
   display: flex;
   align-items: center;
   padding: 0 15px;
-  background-color: #4caf50;
-  color: white;
+  background-color: #1DB954;
+  color: #121212;
   border-radius: 6px;
   font-size: 14px;
+  font-weight: 600;
 }
 
 .captcha-error {
-  color: #c62828;
+  color: #ff4757;
   font-size: 14px;
 }

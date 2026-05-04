@@ -5,13 +5,14 @@
   right: 20px;
   width: 100%;
   max-width: 379px;
-  background: white;
+  background: #242424;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   z-index: 900;
   max-height: calc(100vh - 40px);
   overflow-y: auto;
+  border: 1px solid #333333;
 }
 
 .new-feed-header {
@@ -29,12 +30,13 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 12px;
+  border: 2px solid #1DB954;
 }
 
 .new-feed-user-name {
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: #FFFFFF;
   flex-grow: 1;
 }
 
@@ -46,10 +48,10 @@
 .section-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 15px;
   padding-bottom: 8px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #333333;
 }
 
 .news-section,
@@ -65,26 +67,27 @@
 }
 
 .news-item {
-  background-color: #f8f9fa;
+  background-color: #333333;
   border-radius: 8px;
   padding: 15px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  border: 1px solid #404040;
 }
 
 .news-item:hover {
-  background-color: #f0f2f5;
-  transform: translateX(5px);
+  background-color: #404040;
+  border-color: #1DB954;
 }
 
 .news-title {
   font-weight: 600;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 8px;
 }
 
 .news-content {
   font-size: 14px;
-  color: #555;
+  color: #B3B3B3;
   margin-bottom: 10px;
   line-height: 1.5;
   overflow: hidden;
@@ -98,7 +101,7 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #777;
+  color: #8A8A8A;
 }
 
 .news-author {
@@ -122,29 +125,31 @@
 }
 
 .view-more a {
-  color: #9854cb;
+  color: #1DB954;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
+  transition: color 0.2s;
 }
 
 .view-more a:hover {
+  color: #1ed760;
   text-decoration: underline;
 }
 
 .empty-message {
   text-align: center;
   padding: 15px;
-  color: #777;
+  color: #8A8A8A;
   font-style: italic;
-  background-color: #f8f9fa;
+  background-color: #333333;
   border-radius: 8px;
 }
 
 .loading-message {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: #8A8A8A;
   font-style: italic;
 }
 
@@ -155,22 +160,23 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #9854cb;
+  background: #1DB954;
   border: none;
-  color: white;
+  color: #121212;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
+  transition: all 0.2s ease;
   z-index: 1000;
   font-size: 24px;
+  font-weight: bold;
 }
 
 .chat-toggle-button:hover {
   transform: scale(1.1);
-  background: #8445b9;
+  background: #1ed760;
 }
 
 .chat-window {
@@ -179,19 +185,20 @@
   right: 30px;
   width: 320px;
   height: 400px;
-  background: white;
+  background: #242424;
   border-radius: 12px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   z-index: 1000;
   animation: slideUp 0.3s ease-out;
+  border: 1px solid #333333;
 }
 
 .chat-header {
   padding: 15px 20px;
-  background: #9854cb;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border-radius: 12px 12px 0 0;
   display: flex;
   justify-content: space-between;
@@ -202,13 +209,14 @@
   margin: 0;
   font-size: 16px;
   background: transparent;
-  color: white;
+  color: #121212;
+  font-weight: 600;
 }
 
 .chat-close-button {
   background: transparent;
   border: none;
-  color: white;
+  color: #121212;
   cursor: pointer;
   padding: 5px;
   display: flex;

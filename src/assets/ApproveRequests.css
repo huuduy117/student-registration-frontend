@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,26 +12,29 @@
 }
 
 .reject-dialog {
-  background: white;
+  background: #242424;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  border: 1px solid #333333;
 }
 
 .reject-dialog h3 {
   margin: 0 0 15px 0;
-  color: #333;
+  color: #FFFFFF;
 }
 
 .reject-dialog textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #333333;
   border-radius: 4px;
   margin-bottom: 15px;
   resize: vertical;
+  background: #333333;
+  color: #FFFFFF;
 }
 
 .reject-dialog .dialog-buttons {
@@ -48,13 +51,13 @@
 }
 
 .reject-dialog button:first-child {
-  background-color: #dc3545;
+  background-color: #ff4757;
   color: white;
 }
 
 .reject-dialog button:last-child {
-  background-color: #6c757d;
-  color: white;
+  background-color: #3A3A3A;
+  color: #FFFFFF;
 }
 
 .reject-dialog button:disabled {
@@ -74,12 +77,13 @@
 }
 
 .approve-btn {
-  background-color: #28a745;
-  color: white;
+  background-color: #1DB954;
+  color: #121212;
+  font-weight: 600;
 }
 
 .reject-btn {
-  background-color: #dc3545;
+  background-color: #ff4757;
   color: white;
 }
 
@@ -95,8 +99,8 @@
 }
 
 .refresh-btn {
-  background-color: #4a90e2;
-  color: white;
+  background-color: #1DB954;
+  color: #121212;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -106,27 +110,30 @@
   gap: 8px;
   font-size: 14px;
   transition: background-color 0.2s;
+  font-weight: 600;
 }
 
 .refresh-btn:hover {
-  background-color: #357abd;
+  background-color: #1ed760;
 }
 
 .refresh-btn:disabled {
-  background-color: #ccc;
+  background-color: #3A3A3A;
+  color: #777777;
   cursor: not-allowed;
 }
 
 .empty-state {
   text-align: center;
   padding: 2rem;
-  background-color: #f8f9fa;
+  background-color: #333333;
   border-radius: 8px;
   margin: 1rem 0;
+  border: 1px solid #404040;
 }
 
 .empty-state p {
-  color: #6c757d;
+  color: #8A8A8A;
   margin-bottom: 1rem;
 }
 
@@ -138,16 +145,18 @@
 }
 
 .stat-card {
-  background: white;
+  background: #242424;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #333333;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(29, 185, 84, 0.2);
+  border-color: #1DB954;
 }
 
 .stat-header {
@@ -159,7 +168,7 @@
 
 .stat-title {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #8A8A8A;
   font-weight: 500;
 }
 
@@ -169,37 +178,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: #1DB954;
   border-radius: 8px;
-  color: #64748b;
+  color: #121212;
 }
 
 .stat-value {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #FFFFFF;
 }
 
 .modern-select {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #333333;
   border-radius: 6px;
-  background: white;
-  color: #1e293b;
+  background: #333333;
+  color: #FFFFFF;
   font-size: 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .modern-select:hover {
-  border-color: #cbd5e1;
+  border-color: #404040;
 }
 
 .modern-select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  border-color: #1DB954;
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.1);
 }
 
 .section-header {
@@ -207,25 +216,6 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-}
-
-.refresh-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  color: #64748b;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.refresh-btn:hover {
-  background: #f1f5f9;
-  color: #1e293b;
 }
 
 .teacher-status {
@@ -239,21 +229,21 @@
 }
 
 .teacher-status.has-teacher {
-  background: #dcfce7;
-  color: #10b981;
+  background: rgba(29, 185, 84, 0.2);
+  color: #1DB954;
 }
 
 .teacher-status.no-teacher {
-  background: #fef3c7;
-  color: #f59e0b;
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
 }
 
 tr.has-teacher {
-  background: #f0fdf4;
+  background: rgba(29, 185, 84, 0.05);
 }
 
 tr.no-teacher {
-  background: #fffbeb;
+  background: rgba(255, 193, 7, 0.05);
 }
 
 .action-buttons {
@@ -272,23 +262,23 @@ tr.no-teacher {
 }
 
 .approve-btn {
-  background: #10b981;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
 }
 
 .approve-btn:hover {
-  background: #059669;
+  background: #1ed760;
 }
 
 .reject-btn {
-  background: #ef4444;
+  background: #ff4757;
   color: white;
   border: none;
 }
 
 .reject-btn:hover {
-  background: #dc2626;
+  background: #ff6b7a;
 }
 
 .approve-btn:disabled,

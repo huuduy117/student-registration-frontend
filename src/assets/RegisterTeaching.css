@@ -1,21 +1,14 @@
 .dashboard-container {
   display: flex;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: #121212;
 }
 
 .dashboard-main {
   flex: 1;
   margin-left: 140px;
   padding: 20px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(248, 250, 252, 0.95) 100%
-  );
-  backdrop-filter: blur(10px);
-  border-radius: 20px 0 0 20px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: #121212;
 }
 
 .content-wrapper {
@@ -28,11 +21,29 @@
   margin-bottom: 2rem;
   text-align: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1DB954;
   border-radius: 20px;
-  color: white;
+  color: #121212;
   position: relative;
   overflow: hidden;
+}
+
+.page-header h1 {
+  background: transparent;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.page-header p {
+  background: transparent;
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .page-header::before {
@@ -69,10 +80,11 @@
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
-  background: white;
+  background: #242424;
   padding: 1.5rem;
   border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #333333;
 }
 
 .filter-group {
@@ -96,19 +108,20 @@
 .filter-select {
   width: 100%;
   padding: 0.75rem 1rem 0.75rem 2.5rem;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #333333;
   border-radius: 10px;
   font-size: 0.875rem;
-  transition: all 0.3s ease;
-  background: #f8fafc;
+  transition: all 0.2s ease;
+  background: #333333;
+  color: #FFFFFF;
 }
 
 .filter-input:focus,
 .filter-select:focus {
   outline: none;
-  border-color: #667eea;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #1DB954;
+  background: #404040;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
 }
 
 .classes-grid {
@@ -118,19 +131,20 @@
 }
 
 .class-card {
-  background: white;
+  background: #242424;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.2s ease;
+  border: 1px solid #333333;
   display: flex;
   flex-direction: column;
 }
 
 .class-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 40px rgba(29, 185, 84, 0.2);
+  border-color: #1DB954;
 }
 
 .class-header {
@@ -142,14 +156,14 @@
 .class-header h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #1e293b;
+  color: #FFFFFF;
   margin: 0 0 0.5rem 0;
 }
 
 .class-code {
   font-size: 0.875rem;
-  color: #64748b;
-  background: #f1f5f9;
+  color: #8A8A8A;
+  background: #333333;
   padding: 0.25rem 0.75rem;
   border-radius: 6px;
   display: inline-block;
@@ -166,9 +180,20 @@
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
-  color: #475569;
+  color: #B3B3B3;
   font-size: 0.875rem;
   line-height: 1.5;
+}
+
+.detail-item svg {
+  color: #1DB954;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.description-label {
+  font-weight: 600;
+  color: #FFFFFF;
 }
 
 .detail-item svg {
@@ -202,20 +227,21 @@
 .register-button {
   width: 100%;
   padding: 0.875rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 10px;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   margin-top: auto;
 }
 
 .register-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(29, 185, 84, 0.3);
+  background: #1ed760;
 }
 
 .register-button:active {

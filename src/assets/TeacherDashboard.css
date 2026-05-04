@@ -1,7 +1,7 @@
 .teacher-dashboard {
     display: flex;
     min-height: 100vh;
-    background-color: #f3f5f9;
+    background-color: #121212;
   }
   
   .dashboard-content {
@@ -16,14 +16,15 @@
     align-items: center;
     margin-bottom: 20px;
     padding: 20px;
-    background-color: white;
+    background-color: #242424;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333333;
   }
   
   .dashboard-header h1 {
     font-size: 24px;
-    color: #333;
+    color: #FFFFFF;
     margin: 0;
   }
   
@@ -38,11 +39,12 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid #1DB954;
   }
   
   .dashboard-header .user-name {
     font-weight: 600;
-    color: #333;
+    color: #FFFFFF;
   }
   
   .dashboard-grid {
@@ -53,20 +55,23 @@
   }
   
   .dashboard-card {
-    background-color: white;
+    background-color: #242424;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    border: 1px solid #333333;
   }
   
   .dashboard-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.2);
+    border-color: #1DB954;
   }
   
   .dashboard-card h2 {
     font-size: 18px;
-    color: #333;
+    color: #FFFFFF;
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -75,11 +80,11 @@
   }
   
   .dashboard-card h2 svg {
-    color: #9854cb;
+    color: #1DB954;
   }
   
   .dashboard-card .card-content {
-    color: #555;
+    color: #B3B3B3;
   }
   
   .dashboard-card .card-footer {
@@ -88,41 +93,42 @@
     align-items: center;
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #333333;
   }
   
   .dashboard-card .card-stat {
     font-size: 24px;
     font-weight: 700;
-    color: #9854cb;
+    color: #1DB954;
   }
   
   .dashboard-card .card-action {
     padding: 8px 12px;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: #1DB954;
+    color: #121212;
     border: none;
     border-radius: 6px;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
+    font-weight: 600;
   }
   
   .dashboard-card .card-action:hover {
-    background-color: #9854cb;
-    color: white;
+    background-color: #1ed760;
   }
   
   .class-requests-section {
-    background-color: white;
+    background-color: #242424;
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid #333333;
   }
   
   .class-requests-section h2 {
     font-size: 18px;
-    color: #333;
+    color: #FFFFFF;
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -131,7 +137,7 @@
   }
   
   .class-requests-section h2 svg {
-    color: #9854cb;
+    color: #1DB954;
   }
   
   .requests-table {
@@ -143,17 +149,21 @@
   .requests-table td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #333333;
   }
   
   .requests-table th {
     font-weight: 600;
-    color: #333;
-    background-color: #f8f9fa;
+    color: #FFFFFF;
+    background-color: #333333;
   }
   
   .requests-table tr:hover {
-    background-color: #f6f0ff;
+    background-color: rgba(29, 185, 84, 0.05);
+  }
+  
+  .requests-table td {
+    color: #B3B3B3;
   }
   
   .status-badge {
@@ -165,23 +175,23 @@
   }
   
   .status-badge.pending {
-    background-color: #fff8e1;
-    color: #f57c00;
+    background-color: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
   }
   
   .status-badge.approved {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: rgba(29, 185, 84, 0.2);
+    color: #1DB954;
   }
   
   .status-badge.rejected {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
   }
   
   .status-badge.cancelled {
-    background-color: #f5f5f5;
-    color: #757575;
+    background-color: #3A3A3A;
+    color: #777777;
   }
   
   .action-buttons {
@@ -195,37 +205,39 @@
     border-radius: 4px;
     font-size: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
   }
   
   .approve-button {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: rgba(29, 185, 84, 0.2);
+    color: #1DB954;
   }
   
   .approve-button:hover {
-    background-color: #2e7d32;
-    color: white;
+    background-color: #1DB954;
+    color: #121212;
   }
   
   .reject-button {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
   }
   
   .reject-button:hover {
-    background-color: #c62828;
+    background-color: #ff4757;
     color: white;
   }
   
   .view-button {
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: #333333;
+    color: #FFFFFF;
+    border: 1px solid #404040;
   }
   
   .view-button:hover {
-    background-color: #9854cb;
-    color: white;
+    background-color: #1DB954;
+    color: #121212;
+    border-color: #1DB954;
   }
   
   @media (max-width: 768px) {
@@ -249,4 +261,3 @@
       overflow-x: auto;
     }
   }
-  

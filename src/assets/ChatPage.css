@@ -1,7 +1,7 @@
 /* Chat.css */
 .chat-rooms {
   height: 100%;
-  background: #fff;
+  background: #242424;
 }
 
 .chat-rooms.floating {
@@ -21,15 +21,15 @@
   align-items: center;
   gap: 12px;
   padding: 12px 15px;
-  background: #f8f9fa;
+  background: #333333;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .room-item:hover {
-  background: #f0f2f5;
-  transform: translateX(5px);
+  background: #1DB954;
+  color: #121212;
 }
 
 .room-icon {
@@ -38,42 +38,46 @@
 
 .room-name {
   font-weight: 500;
-  color: #333;
+  color: #FFFFFF;
 }
 
 .chat-room-header {
   padding: 15px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #333333;
   display: flex;
   align-items: center;
   gap: 15px;
+  background: #242424;
 }
 
 .room-title {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #FFFFFF;
 }
 
 .back-button {
   padding: 8px 12px;
-  background: #f0f2f5;
+  background: #333333;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  color: #333;
+  color: #FFFFFF;
+  transition: all 0.2s ease;
 }
 
 .back-button:hover {
-  background: #e4e6e9;
+  background: #1DB954;
+  color: #121212;
 }
 
 .chat-page {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: #fff;
+  background: #242424;
 }
 
 .messages-container {
@@ -85,6 +89,7 @@
   gap: 10px;
   position: relative;
   min-height: 100px;
+  background: #242424;
 }
 
 .messages-container .loading-message {
@@ -92,10 +97,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(36, 36, 36, 0.95);
   padding: 10px 20px;
   border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .message {
@@ -109,22 +114,22 @@
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 4px;
-  color: #555;
+  color: #8A8A8A;
   background-color: transparent;
 }
 
 .message.received {
   align-self: flex-start;
-  background-color: #f0f2f5;
-  color: #333;
+  background-color: #333333;
+  color: #FFFFFF;
   border-top-left-radius: 4px;
   max-width: 70%;
 }
 
 .message.sent {
   align-self: flex-end;
-  background-color: #9854cb;
-  color: white;
+  background-color: #1DB954;
+  color: #121212;
   border-top-right-radius: 4px;
   max-width: 70%;
 }
@@ -146,42 +151,46 @@
   display: flex;
   gap: 10px;
   padding: 15px;
-  background: white;
-  border-top: 1px solid #eee;
+  background: #242424;
+  border-top: 1px solid #333333;
 }
 
 .message-input {
   flex: 1;
   padding: 10px 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #333333;
   border-radius: 20px;
   outline: none;
   font-size: 14px;
+  background: #333333;
+  color: #FFFFFF;
 }
 
 .message-input:focus {
-  border-color: #9854cb;
+  border-color: #1DB954;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
 }
 
 .send-button {
   padding: 8px 20px;
-  background: #9854cb;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  font-weight: 600;
 }
 
 .send-button:hover {
-  background: #8445b9;
+  background: #1ed760;
 }
 
 .loading-message {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: #B3B3B3;
   font-style: italic;
 }
 
@@ -189,16 +198,16 @@
   text-align: center;
   padding: 10px;
   margin: 10px;
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
   border-radius: 8px;
   font-size: 14px;
 }
 
 /* Add styles for pinned tickets and pin button */
 .class-request-ticket.pinned {
-  border-left: 4px solid #ff9800;
-  background-color: #fff8e1;
+  border-left: 4px solid #1DB954;
+  background-color: rgba(29, 185, 84, 0.1);
 }
 
 .pin-ticket-button {
@@ -207,31 +216,32 @@
   right: 40px;
   background: transparent;
   border: none;
-  color: #999;
+  color: #8A8A8A;
   font-size: 16px;
   cursor: pointer;
   padding: 0;
   line-height: 1;
   transform: rotate(45deg);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .pin-ticket-button.pinned {
-  color: #ff9800;
+  color: #1DB954;
   transform: rotate(0deg);
 }
 
 .pin-ticket-button:hover {
-  color: #ff9800;
+  color: #1DB954;
 }
 
 /* Class Request Form Styles */
 .class-request-form {
-  background: white;
+  background: #242424;
   border-radius: 8px;
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  border: 1px solid #333333;
 }
 
 .form-title {
@@ -239,12 +249,12 @@
   align-items: center;
   gap: 10px;
   font-size: 20px;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 20px;
 }
 
 .form-icon {
-  color: #9854cb;
+  color: #1DB954;
 }
 
 .form-group {
@@ -257,23 +267,27 @@
   gap: 8px;
   font-weight: 500;
   margin-bottom: 8px;
+  color: #FFFFFF;
 }
 
 .input-icon {
-  color: #9854cb;
+  color: #1DB954;
 }
 
 .form-input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid #333333;
   border-radius: 6px;
   font-size: 14px;
+  background: #333333;
+  color: #FFFFFF;
 }
 
 .form-input:focus {
-  border-color: #9854cb;
+  border-color: #1DB954;
   outline: none;
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.1);
 }
 
 .form-row {
@@ -292,24 +306,31 @@
 
 .add-participant-button {
   padding: 10px 15px;
-  background: #9854cb;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+}
+
+.add-participant-button:hover {
+  background: #1ed760;
 }
 
 .participants-list {
   margin-top: 15px;
-  border: 1px solid #eee;
+  border: 1px solid #333333;
   border-radius: 6px;
   padding: 15px;
+  background: #333333;
 }
 
 .participants-list h3 {
   font-size: 16px;
   margin-bottom: 10px;
+  color: #FFFFFF;
 }
 
 .participants-table {
@@ -321,22 +342,27 @@
 .participants-table td {
   padding: 8px 12px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #242424;
+  color: #FFFFFF;
 }
 
 .participants-table th {
   font-weight: 600;
-  background: #f8f9fa;
+  background: #242424;
 }
 
 .remove-participant-button {
   padding: 5px 10px;
-  background: #ffebee;
-  color: #c62828;
+  background: rgba(255, 71, 87, 0.1);
+  color: #ff4757;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
+}
+
+.remove-participant-button:hover {
+  background: rgba(255, 71, 87, 0.2);
 }
 
 .form-actions {
@@ -348,36 +374,49 @@
 
 .cancel-button {
   padding: 10px 20px;
-  background: #f0f2f5;
-  color: #333;
+  background: #333333;
+  color: #FFFFFF;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+  background: #404040;
 }
 
 .submit-button {
   padding: 10px 20px;
-  background: #9854cb;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  background: #1ed760;
 }
 
 /* Class Request Ticket Styles */
 .class-request-ticket {
-  background: #f8f9fa;
+  background: #333333;
   border-radius: 8px;
   overflow: hidden;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   border-left: 4px solid transparent;
+  border: 1px solid #404040;
 }
 
 .class-request-ticket:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(29, 185, 84, 0.2);
+  border-color: #1DB954;
 }
 
 .ticket-header {
@@ -395,13 +434,13 @@
 
 .course-name {
   font-weight: 600;
-  color: #333;
+  color: #FFFFFF;
   font-size: 16px;
 }
 
 .semester-batch {
   font-size: 12px;
-  color: #666;
+  color: #8A8A8A;
   margin-top: 4px;
 }
 
@@ -416,27 +455,28 @@
   align-items: center;
   gap: 5px;
   font-size: 14px;
-  color: #666;
+  color: #8A8A8A;
 }
 
 .created-at {
   font-size: 12px;
-  color: #888;
+  color: #666666;
 }
 
 .ticket-details {
   padding: 0 15px 15px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #404040;
 }
 
 .creator-info {
   margin: 10px 0;
   font-size: 14px;
+  color: #B3B3B3;
 }
 
 .label {
   font-weight: 500;
-  color: #555;
+  color: #FFFFFF;
   margin-right: 5px;
 }
 
@@ -447,7 +487,7 @@
 
 .request-description p {
   margin-top: 5px;
-  color: #555;
+  color: #B3B3B3;
 }
 
 .ticket-actions {
@@ -458,26 +498,38 @@
 
 .join-button {
   padding: 8px 15px;
-  background: #9854cb;
-  color: white;
+  background: #1DB954;
+  color: #121212;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  font-weight: 600;
+}
+
+.join-button:hover {
+  background: #1ed760;
 }
 
 .view-participants-button,
 .view-details-button {
   padding: 8px 15px;
-  background: #f0f2f5;
-  color: #333;
-  border: none;
+  background: #333333;
+  color: #FFFFFF;
+  border: 1px solid #404040;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   display: flex;
   align-items: center;
   gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.view-participants-button:hover,
+.view-details-button:hover {
+  border-color: #1DB954;
+  color: #1DB954;
 }
 
 /* Modal Styles */
@@ -487,7 +539,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -497,13 +549,14 @@
 .participants-list-modal,
 .request-details-modal,
 .join-class-form {
-  background: white;
+  background: #242424;
   border-radius: 8px;
   padding: 20px;
   max-width: 600px;
   width: 100%;
   max-height: 80vh;
   overflow-y: auto;
+  border: 1px solid #333333;
 }
 
 .modal-title {
@@ -511,7 +564,7 @@
   align-items: center;
   gap: 10px;
   font-size: 20px;
-  color: #333;
+  color: #FFFFFF;
   margin-bottom: 15px;
 }
 
@@ -519,6 +572,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 15px;
+  color: #B3B3B3;
 }
 
 .participants-table-container {
@@ -535,51 +589,60 @@
 
 .close-button {
   padding: 8px 15px;
-  background: #f0f2f5;
-  color: #333;
+  background: #333333;
+  color: #FFFFFF;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background: #404040;
 }
 
 .no-data-message {
   text-align: center;
   padding: 20px;
-  color: #666;
+  color: #8A8A8A;
   font-style: italic;
 }
 
 /* Join Class Form Styles */
 .join-class-form .request-info {
-  background: #f8f9fa;
+  background: #333333;
   border-radius: 6px;
   padding: 15px;
   margin-bottom: 20px;
+  border: 1px solid #404040;
 }
 
 .info-item {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  color: #B3B3B3;
 }
 
 .info-icon {
-  color: #9854cb;
+  color: #1DB954;
   margin-right: 8px;
 }
 
 .info-label {
   font-weight: 500;
   margin-right: 5px;
+  color: #FFFFFF;
 }
 
 /* Request Details Styles */
 .request-info-section {
-  background: #f8f9fa;
+  background: #333333;
   border-radius: 6px;
   padding: 15px;
   margin-bottom: 20px;
+  border: 1px solid #404040;
 }
 
 .description-section {
@@ -589,11 +652,11 @@
 .section-title {
   font-size: 16px;
   margin-bottom: 10px;
-  color: #333;
+  color: #FFFFFF;
 }
 
 .description-text {
-  color: #555;
+  color: #B3B3B3;
   line-height: 1.5;
 }
 
@@ -640,17 +703,17 @@
 }
 
 .messages-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #181818;
   border-radius: 3px;
 }
 
 .messages-container::-webkit-scrollbar-thumb {
-  background: #9854cb;
+  background: #1DB954;
   border-radius: 3px;
 }
 
 .messages-container::-webkit-scrollbar-thumb:hover {
-  background: #8445b9;
+  background: #1ed760;
 }
 
 @keyframes slideIn {
@@ -670,5 +733,5 @@
 
 /* Add a subtle hover effect to messages */
 .message:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
