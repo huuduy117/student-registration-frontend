@@ -7,6 +7,7 @@ import { FaUser, FaLock, FaSchool } from "react-icons/fa";
 import "./../assets/Login.css";
 import axiosInstance from "../services/axios";
 import { normalizeRole } from "../utils/roleUtils";
+import DemoAccountCard from "../components/DemoAccountCard";
 
 const getRoleBasedRedirect = (role) => {
   const normalized = normalizeRole(role);
@@ -42,7 +43,7 @@ const Login = () => {
     const logoutReason = sessionStorage.getItem("logout_reason");
     if (logoutReason === "duplicate_login") {
       setError(
-        "Tài khoản này đang bị đăng nhập ở nơi khác, vui lòng đăng nhập lại"
+        "Tài khoản này đang bị đăng nhập ở nơi khác, vui lòng đăng nhập lại",
       );
       sessionStorage.removeItem("logout_reason");
     }
@@ -59,7 +60,7 @@ const Login = () => {
   // Add a function to update session activity - using useCallback to fix the dependency issue
   const updateSessionActivity = useCallback(() => {
     const authData = JSON.parse(
-      sessionStorage.getItem(`auth_${tabId}`) || "{}"
+      sessionStorage.getItem(`auth_${tabId}`) || "{}",
     );
     if (authData.token) {
       authData.lastActivity = Date.now();
@@ -90,7 +91,7 @@ const Login = () => {
       // Check if this user is already logged in elsewhere
       const allKeys = Object.keys(sessionStorage);
       const authKeys = allKeys.filter(
-        (key) => key.startsWith("auth_") && key !== `auth_${tabId}`
+        (key) => key.startsWith("auth_") && key !== `auth_${tabId}`,
       );
 
       for (const key of authKeys) {
@@ -134,6 +135,12 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleAutoFill = (email, password) => {
+    setUsername(email);
+    setPassword(password);
+    setError("");
   };
 
   return (
@@ -215,6 +222,7 @@ const Login = () => {
           </div>
         </form>
       </div>
+      <DemoAccountCard onAutoFill={handleAutoFill} />
     </div>
   );
 };
