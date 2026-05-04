@@ -1,17 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  box-sizing: border-box;
-  background-color: var(--color-background);
-}
+/* Home layout — no universal * selector, that's in theme.css now */
 
-/* Add responsive container */
 .home-container {
   display: flex;
   min-height: 100vh;
   position: relative;
+  background-color: var(--color-background);
 }
 
 @media (max-width: 768px) {

@@ -1,4 +1,4 @@
-/* Chat.css */
+/* Chat */
 .chat-rooms {
   height: 100%;
   background: var(--color-surface);
@@ -12,41 +12,39 @@
 .room-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 15px;
+  gap: 6px;
+  padding: var(--space-4);
 }
 
 .room-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 15px;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
   background: var(--color-background);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background-color 0.15s ease;
 }
 
 .room-item:hover {
   background: var(--color-primary-soft);
-  transform: translateX(5px);
 }
 
-.room-icon {
-  font-size: 24px;
-}
+.room-icon { font-size: 22px; }
 
 .room-name {
   font-weight: 500;
   color: var(--color-text-primary);
+  font-size: 14px;
 }
 
 .chat-room-header {
-  padding: 15px;
+  padding: var(--space-4);
   border-bottom: 1px solid var(--color-border);
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: var(--space-4);
 }
 
 .room-title {
@@ -56,13 +54,14 @@
 }
 
 .back-button {
-  padding: 8px 12px;
+  padding: 6px 12px;
   background: var(--color-background);
-  border: none;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
+  transition: all 0.15s;
 }
 
 .back-button:hover {
@@ -79,10 +78,10 @@
 .messages-container {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
   position: relative;
   min-height: 100px;
 }
@@ -92,25 +91,25 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(255, 255, 255, 0.9);
-  padding: 10px 20px;
+  background: var(--color-surface);
+  padding: 8px 16px;
   border-radius: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  font-size: 13px;
 }
 
 .message {
   max-width: 70%;
-  padding: 10px 15px;
-  border-radius: 15px;
-  margin: 5px 0;
+  padding: 10px 14px;
+  border-radius: 14px;
+  margin: 4px 0;
 }
 
 .message-sender {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   color: var(--color-text-secondary);
-  background-color: transparent;
 }
 
 .message.received {
@@ -118,45 +117,46 @@
   background-color: var(--color-background);
   color: var(--color-text-primary);
   border-top-left-radius: 4px;
-  max-width: 70%;
 }
 
 .message.sent {
   align-self: flex-end;
   background-color: var(--color-primary);
-  color: var(--color-surface);
+  color: white;
   border-top-right-radius: 4px;
-  max-width: 70%;
 }
 
 .message-content {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   word-wrap: break-word;
-  background-color: transparent;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .message-timestamp {
-  font-size: 11px;
+  font-size: 10px;
   opacity: 0.7;
   text-align: right;
-  background-color: transparent;
 }
 
 .message-form {
   display: flex;
-  gap: 10px;
-  padding: 15px;
+  gap: var(--space-3);
+  padding: var(--space-4);
   background: var(--color-surface);
   border-top: 1px solid var(--color-border);
 }
 
 .message-input {
   flex: 1;
-  padding: 10px 15px;
-  border: 1px solid var(--color-border);
+  padding: 10px 16px;
+  border: 1.5px solid var(--color-border);
   border-radius: 20px;
   outline: none;
   font-size: 14px;
+  font-family: var(--font-sans);
+  transition: border-color 0.15s;
+  color: var(--color-text-primary);
 }
 
 .message-input:focus {
@@ -164,40 +164,42 @@
 }
 
 .send-button {
-  padding: 8px 20px;
+  padding: 8px 18px;
   background: var(--color-primary);
-  color: var(--color-surface);
+  color: white;
   border: none;
   border-radius: 20px;
   cursor: pointer;
   font-size: 14px;
-  transition: all 0.3s ease;
+  font-weight: 500;
+  transition: background-color 0.15s;
 }
 
 .send-button:hover {
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
 }
 
 .loading-message {
   text-align: center;
-  padding: 20px;
+  padding: var(--space-5);
   color: var(--color-text-secondary);
   font-style: italic;
+  font-size: 13px;
 }
 
 .error-message {
   text-align: center;
-  padding: 10px;
-  margin: 10px;
+  padding: var(--space-3);
+  margin: var(--space-3);
   background-color: var(--color-danger-soft);
   color: var(--color-danger);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
 }
 
-/* Add styles for pinned tickets and pin button */
+/* Pinned tickets */
 .class-request-ticket.pinned {
-  border-left: 4px solid var(--color-warning);
+  border-left: 3px solid var(--color-warning);
   background-color: var(--color-warning-soft);
 }
 
@@ -213,7 +215,7 @@
   padding: 0;
   line-height: 1;
   transform: rotate(45deg);
-  transition: all 0.3s ease;
+  transition: all 0.15s;
 }
 
 .pin-ticket-button.pinned {
@@ -226,57 +228,8 @@
 }
 
 @media (max-width: 768px) {
-  .room-item {
-    padding: 15px;
-  }
-
-  .room-icon {
-    font-size: 28px;
-  }
-
-  .message-input {
-    font-size: 16px;
-  }
-
-  .send-button {
-    padding: 10px 24px;
-  }
-}
-
-.messages-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.messages-container::-webkit-scrollbar-track {
-  background: var(--color-background);
-  border-radius: 3px;
-}
-
-.messages-container::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 3px;
-}
-
-.messages-container::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-light);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.message {
-  animation: slideIn 0.3s ease-out;
-}
-
-/* Add a subtle hover effect to messages */
-.message:hover {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  .room-item { padding: var(--space-4); }
+  .room-icon { font-size: 26px; }
+  .message-input { font-size: 16px; }
+  .send-button { padding: 10px 22px; }
 }

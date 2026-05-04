@@ -34,11 +34,9 @@ export default function MainContainer() {
   const QuickActionCard = ({ icon: Icon, title, description, link, colorClass = "accent-primary" }) => (
     <motion.div
       className="quick-action-card"
-      whileHover={{ scale: 1.02, y: -5 }}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.25 }}
     >
       <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
         <div className={`action-icon ${colorClass}`}>
@@ -53,8 +51,8 @@ export default function MainContainer() {
   const StatCard = ({ icon: Icon, title, value, change, colorClass = "accent-primary" }) => (
     <motion.div
       className="stat-card-mini"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
       <div className={`stat-icon ${colorClass}`}>

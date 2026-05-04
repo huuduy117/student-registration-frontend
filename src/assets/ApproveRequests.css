@@ -1,166 +1,200 @@
+/* Approve Requests */
 .reject-dialog-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: 0; left: 0; right: 0; bottom: 0;
   background-color: var(--color-overlay);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  backdrop-filter: blur(4px);
 }
 
 .reject-dialog {
   background: var(--color-surface);
-  padding: 20px;
-  border-radius: 8px;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.08);
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--color-border);
 }
 
 .reject-dialog h3 {
-  margin: 0 0 15px 0;
+  margin: 0 0 var(--space-4) 0;
   color: var(--color-text-primary);
+  font-size: 16px;
 }
 
 .reject-dialog textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  margin-bottom: 15px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-4);
   resize: vertical;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+
+.reject-dialog textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
 .reject-dialog .dialog-buttons {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: var(--space-2);
 }
 
 .reject-dialog button {
   padding: 8px 16px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
 }
 
 .reject-dialog button:first-child {
   background-color: var(--color-danger);
-  color: var(--color-surface);
+  color: white;
+}
+
+.reject-dialog button:first-child:hover {
+  background-color: #DC2626;
 }
 
 .reject-dialog button:last-child {
-  background-color: var(--color-text-secondary);
-  color: var(--color-surface);
+  background-color: var(--color-background);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.reject-dialog button:last-child:hover {
+  background-color: var(--color-border);
 }
 
 .reject-dialog button:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Update existing button styles */
+/* Action buttons */
 .approve-btn,
 .reject-btn {
-  padding: 8px 16px;
-  margin: 0 5px;
+  padding: 6px 14px;
+  margin: 0 4px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s ease;
 }
 
 .approve-btn {
   background-color: var(--color-success);
-  color: var(--color-surface);
+  color: white;
+}
+
+.approve-btn:hover {
+  background-color: #16A34A;
 }
 
 .reject-btn {
   background-color: var(--color-danger);
-  color: var(--color-surface);
+  color: white;
+}
+
+.reject-btn:hover {
+  background-color: #DC2626;
 }
 
 .approve-btn:disabled,
 .reject-btn:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
 .refresh-container {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
   text-align: right;
 }
 
 .refresh-btn {
-  background-color: var(--color-primary);
-  color: var(--color-surface);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  transition: background-color 0.2s;
+  gap: 6px;
+  padding: 8px 14px;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
 .refresh-btn:hover {
-  background-color: var(--color-primary-light);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-dark);
+  border-color: var(--color-primary);
 }
 
 .refresh-btn:disabled {
-  background-color: var(--color-text-muted);
+  background-color: var(--color-background);
+  color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .empty-state {
   text-align: center;
-  padding: 2rem;
+  padding: var(--space-6);
   background-color: var(--color-background);
-  border-radius: 8px;
-  margin: 1rem 0;
+  border-radius: var(--radius-md);
+  margin: var(--space-4) 0;
+  border: 1px solid var(--color-border);
 }
 
 .empty-state p {
   color: var(--color-text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
 .stat-card {
   background: var(--color-surface);
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.15s, box-shadow 0.15s;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(17, 24, 39, 0.1);
+  box-shadow: var(--shadow-md);
 }
 
 .stat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .stat-title {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--color-text-secondary);
   font-weight: 500;
 }
@@ -171,72 +205,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-background);
-  border-radius: 8px;
-  color: var(--color-text-secondary);
+  background: var(--color-primary-soft);
+  border-radius: var(--radius-md);
+  color: var(--color-primary-dark);
 }
 
 .stat-value {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .modern-select {
   width: 100%;
-  padding: 0.5rem;
+  padding: 8px 12px;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text-primary);
-  font-size: 0.9rem;
+  font-size: 13px;
+  font-family: var(--font-sans);
   cursor: pointer;
-  transition: border-color 0.2s;
+  transition: border-color 0.15s;
 }
 
 .modern-select:hover {
-  border-color: var(--color-border);
+  border-color: var(--color-text-muted);
 }
 
 .modern-select:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 2px var(--color-primary-soft);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.refresh-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  color: var(--color-text-secondary);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.refresh-btn:hover {
-  background: var(--color-primary-soft);
-  color: var(--color-text-primary);
+  margin-bottom: var(--space-5);
 }
 
 .teacher-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.25rem 0.75rem;
+  gap: 6px;
+  padding: 3px 10px;
   border-radius: 20px;
-  font-size: 0.85rem;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -260,41 +276,5 @@ tr.no-teacher {
 
 .action-buttons {
   display: flex;
-  gap: 0.5rem;
-}
-
-.approve-btn,
-.reject-btn {
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.approve-btn {
-  background: var(--color-success);
-  color: var(--color-surface);
-  border: none;
-}
-
-.approve-btn:hover {
-  background: var(--color-success);
-}
-
-.reject-btn {
-  background: var(--color-danger);
-  color: var(--color-surface);
-  border: none;
-}
-
-.reject-btn:hover {
-  background: var(--color-danger);
-}
-
-.approve-btn:disabled,
-.reject-btn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
+  gap: 6px;
 }

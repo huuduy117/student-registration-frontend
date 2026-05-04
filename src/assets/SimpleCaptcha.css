@@ -1,11 +1,12 @@
+/* Simple Captcha */
 .captcha-container {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: var(--space-4);
 }
 
 .captcha-container h3 {
-  font-size: 16px;
+  font-size: 15px;
   color: var(--color-text-primary);
   margin: 0;
 }
@@ -13,33 +14,35 @@
 .captcha-challenge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .captcha-text {
   background-color: var(--color-background);
-  padding: 12px 15px;
-  border-radius: 6px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
   font-size: 18px;
   font-weight: 600;
+  font-family: var(--font-mono);
   color: var(--color-text-primary);
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   flex-grow: 1;
   text-align: center;
+  border: 1px solid var(--color-border);
 }
 
 .refresh-button {
   background-color: var(--color-background);
-  border: none;
-  border-radius: 6px;
-  width: 40px;
-  height: 40px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px;
-  transition: background-color 0.3s;
+  font-size: 16px;
+  transition: all 0.15s;
 }
 
 .refresh-button:hover {
@@ -48,21 +51,24 @@
 
 .captcha-input-group {
   display: flex;
-  gap: 10px;
+  gap: var(--space-3);
 }
 
 .captcha-input {
   flex-grow: 1;
   padding: 10px 12px;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
   font-size: 14px;
-  transition: all 0.3s;
+  font-family: var(--font-sans);
+  transition: border-color 0.15s;
+  color: var(--color-text-primary);
 }
 
 .captcha-input:focus {
   border-color: var(--color-primary);
   outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
 .captcha-input.verified {
@@ -71,18 +77,19 @@
 }
 
 .verify-button {
-  padding: 10px 15px;
+  padding: 10px 16px;
   background-color: var(--color-primary);
-  color: var(--color-surface);
+  color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   font-size: 14px;
-  transition: background-color 0.3s;
+  font-weight: 500;
+  transition: all 0.15s;
 }
 
 .verify-button:hover:not(:disabled) {
-  background-color: var(--color-primary-light);
+  background-color: var(--color-primary-dark);
 }
 
 .verify-button:disabled {
@@ -93,14 +100,15 @@
 .verified-badge {
   display: flex;
   align-items: center;
-  padding: 0 15px;
+  padding: 0 14px;
   background-color: var(--color-success);
-  color: var(--color-surface);
-  border-radius: 6px;
-  font-size: 14px;
+  color: white;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
 }
 
 .captcha-error {
   color: var(--color-danger);
-  font-size: 14px;
+  font-size: 13px;
 }

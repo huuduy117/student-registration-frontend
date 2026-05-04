@@ -1,93 +1,92 @@
-/* NewFeed.css */
+/* NewFeed Panel */
 .new-feed-wrapper {
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   width: 100%;
   max-width: 379px;
   background: var(--color-surface);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(17, 24, 39, 0.06);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
   border: 1px solid var(--color-border);
   z-index: 900;
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 32px);
   overflow-y: auto;
 }
 
 .new-feed-header {
   display: flex;
   align-items: center;
-  padding: 12px;
-  border-radius: 8px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
   position: relative;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-3);
 }
 
 .new-feed-avatar {
-  width: 52px;
-  height: 52px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  margin-right: 12px;
+  margin-right: var(--space-3);
 }
 
 .new-feed-user-name {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-text-primary);
   flex-grow: 1;
 }
 
 .new-feed-main {
-  padding: 12px;
-  border-radius: 8px;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--color-text-primary);
-  margin-bottom: 15px;
-  padding-bottom: 8px;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-2);
   border-bottom: 1px solid var(--color-border);
 }
 
 .news-section,
 .open-requests-section,
 .pinned-requests-section {
-  margin-bottom: 25px;
+  margin-bottom: var(--space-5);
 }
 
 .news-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: var(--space-3);
 }
 
 .news-item {
   background-color: var(--color-background);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
-  padding: 15px;
-  transition: all 0.3s ease;
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  transition: background-color 0.15s ease;
 }
 
 .news-item:hover {
-  background-color: rgba(167, 139, 250, 0.08);
-  transform: translateX(5px);
+  background-color: var(--color-primary-soft);
 }
 
 .news-title {
   font-weight: 600;
   color: var(--color-text-primary);
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
 }
 
 .news-content {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--color-text-secondary);
-  margin-bottom: 10px;
+  margin-bottom: var(--space-2);
   line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -115,88 +114,89 @@
 .pinned-requests-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: var(--space-3);
 }
 
 .view-more {
   text-align: center;
-  margin-top: 10px;
+  margin-top: var(--space-2);
 }
 
 .view-more a {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
 }
 
 .view-more a:hover {
   text-decoration: underline;
+  color: var(--color-primary);
 }
 
 .empty-message {
   text-align: center;
-  padding: 15px;
+  padding: var(--space-4);
   color: var(--color-text-muted);
   font-style: italic;
   background-color: var(--color-background);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
 .loading-message {
   text-align: center;
-  padding: 20px;
+  padding: var(--space-5);
   color: var(--color-text-secondary);
   font-style: italic;
 }
 
 .chat-toggle-button {
   position: fixed;
-  bottom: 30px;
-  right: 30px;
-  width: 60px;
-  height: 60px;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--gradient-primary);
   border: none;
-  color: var(--color-surface);
+  color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.28);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(62, 207, 142, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
   z-index: 1000;
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .chat-toggle-button:hover {
-  transform: scale(1.1);
-  background: var(--color-primary);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(62, 207, 142, 0.4);
 }
 
 .chat-window {
   position: fixed;
-  bottom: 100px;
-  right: 30px;
+  bottom: 88px;
+  right: 24px;
   width: 320px;
   height: 400px;
   background: var(--color-surface);
-  border-radius: 12px;
-  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  animation: slideUp 0.3s ease-out;
+  animation: chatSlideUp 0.2s ease-out;
 }
 
 .chat-header {
-  padding: 15px 20px;
+  padding: 14px 20px;
   background: var(--gradient-primary);
-  color: var(--color-surface);
-  border-radius: 12px 12px 0 0;
+  color: white;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -204,17 +204,16 @@
 
 .chat-header h3 {
   margin: 0;
-  font-size: 16px;
-  background: transparent;
-  color: var(--color-surface);
+  font-size: 15px;
+  color: white;
 }
 
 .chat-close-button {
   background: transparent;
   border: none;
-  color: var(--color-surface);
+  color: white;
   cursor: pointer;
-  padding: 5px;
+  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,31 +227,31 @@
 @media (max-width: 768px) {
   .new-feed-wrapper {
     position: static;
-    max-width: calc(100% - 40px);
-    margin: 20px auto;
+    max-width: calc(100% - 32px);
+    margin: 16px auto;
     z-index: 1;
   }
 
   .chat-window {
-    width: calc(100% - 40px);
+    width: calc(100% - 32px);
     height: 60vh;
-    bottom: 80px;
-    right: 20px;
-    left: 20px;
+    bottom: 72px;
+    right: 16px;
+    left: 16px;
   }
 
   .chat-toggle-button {
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
+    bottom: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
   }
 }
 
-@keyframes slideUp {
+@keyframes chatSlideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;

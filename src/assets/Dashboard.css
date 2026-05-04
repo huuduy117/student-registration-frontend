@@ -1,3 +1,4 @@
+/* Dashboard Layout */
 .dashboard-container {
   display: flex;
   min-height: 100vh;
@@ -7,31 +8,31 @@
 .dashboard-main {
   flex: 1;
   margin-left: 131px;
-  padding: 20px;
+  padding: var(--space-5);
 }
 
 .dashboard-content {
-  margin-top: 20px;
+  margin-top: var(--space-5);
 }
 
 .dashboard-section {
   background: var(--color-surface);
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.06);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--color-border);
-  margin-bottom: 20px;
+  margin-bottom: var(--space-5);
 }
 
 .dashboard-section h2 {
   color: var(--color-text-primary);
-  margin-bottom: 15px;
+  margin-bottom: var(--space-4);
   font-size: 18px;
 }
 
 @media (max-width: 768px) {
   .dashboard-main {
     margin-left: 0;
-    padding: 80px 20px 20px;
+    padding: 72px var(--space-5) var(--space-5);
   }
 }

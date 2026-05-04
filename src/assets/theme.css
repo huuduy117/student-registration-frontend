@@ -1,32 +1,127 @@
+/* ============================================
+   Design System — Supabase-Inspired Tokens
+   ============================================ */
+
 :root {
-  --color-background: #f7f7f8;
-  --color-surface: #ffffff;
-  --color-border: #e5e7eb;
+  /* ---- Colors ---- */
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-border: #E5E7EB;
+
   --color-text-primary: #111827;
-  --color-text-secondary: #6b7280;
-  --color-text-muted: #9ca3af;
-  --color-primary: #8b5cf6;
-  --color-primary-light: #a78bfa;
-  --color-success: #22c55e;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-accent-pink: #ec4899;
+  --color-text-secondary: #6B7280;
+  --color-text-muted: #9CA3AF;
 
-  --color-primary-soft: rgba(139, 92, 246, 0.12);
-  --color-success-soft: rgba(34, 197, 94, 0.14);
-  --color-warning-soft: rgba(245, 158, 11, 0.16);
-  --color-danger-soft: rgba(239, 68, 68, 0.14);
-  --color-info-soft: rgba(167, 139, 250, 0.16);
-  --color-overlay: rgba(17, 24, 39, 0.35);
+  /* Brand: fresh green */
+  --color-primary: #3ECF8E;
+  --color-primary-light: #6EE7B7;
+  --color-primary-dark: #10B981;
 
-  --gradient-page: linear-gradient(
-    180deg,
-    #f7f7f8 0%,
-    rgba(167, 139, 250, 0.08) 100%
-  );
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--color-primary-light) 0%,
-    var(--color-primary) 100%
-  );
+  /* Secondary accent: cool teal */
+  --color-accent: #22D3EE;
+
+  /* Semantic */
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
+
+  /* Soft backgrounds */
+  --color-primary-soft: rgba(62, 207, 142, 0.12);
+  --color-success-soft: rgba(34, 197, 94, 0.12);
+  --color-warning-soft: rgba(245, 158, 11, 0.12);
+  --color-danger-soft: rgba(239, 68, 68, 0.12);
+  --color-info-soft: rgba(34, 211, 238, 0.12);
+  --color-overlay: rgba(17, 24, 39, 0.4);
+
+  /* Gradients */
+  --gradient-page: linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%);
+  --gradient-primary: linear-gradient(135deg, #3ECF8E 0%, #10B981 100%);
+
+  /* ---- Typography ---- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* ---- Border Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+
+  /* ---- Shadows ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* ---- Spacing Scale (8px system) ---- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+}
+
+/* ============================================
+   Global Reset & Base Styles
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-primary);
+}
+
+code, pre, .mono {
+  font-family: var(--font-mono);
+}
+
+/* Custom scrollbar — global */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
 }
