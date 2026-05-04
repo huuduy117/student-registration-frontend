@@ -267,9 +267,41 @@ const Schedule = () => {
                 <div style={{ position: "relative", display: "inline-block" }}>
                   <button className="control-button" onClick={handleExportClick}>🖨️ In lịch</button>
                   {exportMenuOpen && (
-                    <div style={{ position: "absolute", zIndex: 10, background: "white", border: "1px solid #ccc", minWidth: 120 }}>
-                      <button style={{ width: "100%", padding: 8, border: "none", background: "white", cursor: "pointer" }} onClick={() => handleExportFormat("excel")}>Xuất Excel</button>
-                      <button style={{ width: "100%", padding: 8, border: "none", background: "white", cursor: "pointer" }} onClick={() => handleExportFormat("pdf")}>Xuất PDF</button>
+                    <div
+                      style={{
+                        position: "absolute",
+                        zIndex: 10,
+                        background: "var(--color-surface)",
+                        border: "1px solid var(--color-border)",
+                        minWidth: 120,
+                      }}
+                    >
+                      <button
+                        style={{
+                          width: "100%",
+                          padding: 8,
+                          border: "none",
+                          background: "var(--color-surface)",
+                          color: "var(--color-text-secondary)",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleExportFormat("excel")}
+                      >
+                        Xuất Excel
+                      </button>
+                      <button
+                        style={{
+                          width: "100%",
+                          padding: 8,
+                          border: "none",
+                          background: "var(--color-surface)",
+                          color: "var(--color-text-secondary)",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleExportFormat("pdf")}
+                      >
+                        Xuất PDF
+                      </button>
                     </div>
                   )}
                 </div>

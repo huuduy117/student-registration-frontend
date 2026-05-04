@@ -271,9 +271,9 @@ const AdminNewsfeed = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
-            <MessageSquare size={64} color="#cbd5e1" />
-            <h3 style={{ color: "#64748b", marginTop: "1rem" }}>Chưa có bảng tin nào</h3>
-            <p style={{ color: "#94a3b8" }}>Tạo thông báo đầu tiên để bắt đầu</p>
+            <MessageSquare size={64} color="var(--color-border)" />
+            <h3 style={{ color: "var(--color-text-secondary)", marginTop: "1rem" }}>Chưa có bảng tin nào</h3>
+            <p style={{ color: "var(--color-text-muted)" }}>Tạo thông báo đầu tiên để bắt đầu</p>
           </motion.div>
         ) : (
           <motion.div
@@ -297,24 +297,24 @@ const AdminNewsfeed = () => {
                   style={{ height: 'fit-content' }}
                 >
                   <div className="stat-header">
-                    <div className="stat-title" style={{ fontSize: '1rem', fontWeight: '600', color: '#1e293b' }}>
+                    <div className="stat-title" style={{ fontSize: '1rem', fontWeight: '600', color: 'var(--color-text-primary)' }}>
                       {item.title}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                      <IconComponent size={16} color="#667eea" />
-                      <span style={{ fontSize: '0.8rem', color: '#667eea', fontWeight: '500' }}>
+                      <IconComponent size={16} color="var(--color-primary)" />
+                      <span style={{ fontSize: '0.8rem', color: 'var(--color-primary)', fontWeight: '500' }}>
                         {recipientInfo.label}
                       </span>
                     </div>
                   </div>
                   
-                  <div style={{ margin: '1rem 0', color: '#64748b', lineHeight: '1.5' }}>
+                  <div style={{ margin: '1rem 0', color: 'var(--color-text-secondary)', lineHeight: '1.5' }}>
                     {item.content.length > 120
                       ? `${item.content.substring(0, 120)}...`
                       : item.content}
                   </div>
                   
-                  <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '1rem' }}>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
                     Đăng bởi: <strong>{item.author}</strong> • {item.time}
                   </div>
                   
@@ -358,14 +358,14 @@ const AdminNewsfeed = () => {
                 style={{ maxWidth: '600px' }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <h2 style={{ margin: 0, color: '#1e293b' }}>
+                  <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>
                     {editNews ? "Sửa thông báo" : "Tạo thông báo mới"}
                   </h2>
                   <button
                     onClick={handleCloseDialog}
                     style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    <X size={24} color="#64748b" />
+                    <X size={24} color="var(--color-text-secondary)" />
                   </button>
                 </div>
 

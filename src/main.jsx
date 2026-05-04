@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import axios from "axios";
+import "./assets/theme.css";
 
 // Global interceptor to unwrap the new structured JSON response format
 axios.interceptors.response.use(

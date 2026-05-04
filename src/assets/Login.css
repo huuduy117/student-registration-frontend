@@ -11,16 +11,17 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+  background: var(--gradient-page);
   padding: 20px;
 }
 
 .login-card {
   width: 420px;
   padding: 40px;
-  background: #ffffff;
+  background: var(--color-surface);
   border-radius: 20px;
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 28px rgba(17, 24, 39, 0.08);
+  border: 1px solid var(--color-border);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   position: relative;
@@ -28,7 +29,7 @@
 
 .login-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 18px 32px rgba(17, 24, 39, 0.12);
 }
 
 .login-card::before {
@@ -38,13 +39,13 @@
   left: 0;
   width: 100%;
   height: 5px;
-  background: linear-gradient(90deg, #8e2de2, #4a00e0);
+  background: var(--gradient-primary);
 }
 
 .login-header {
   text-align: center;
   margin-bottom: 30px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .login-logo {
@@ -53,7 +54,7 @@
   margin-bottom: 15px;
   border-radius: 50%;
   padding: 15px;
-  background: #f8f9fa;
+  background: var(--color-background);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -63,31 +64,31 @@
 .login-logo svg {
   width: 40px;
   height: 40px;
-  color: #8e2de2;
+  color: var(--color-primary);
 }
 
 .login-title {
-  color: #333;
+  color: var(--color-text-primary);
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 10px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .login-subtitle {
-  color: #666;
+  color: var(--color-text-secondary);
   font-size: 16px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .form-group {
   margin-bottom: 25px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   position: relative;
 }
 
 form.login-form {
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .form-group label {
@@ -96,9 +97,9 @@ form.login-form {
   gap: 8px;
   margin-bottom: 10px;
   font-weight: 500;
-  color: #555;
+  color: var(--color-text-secondary);
   font-size: 14px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .input-wrapper {
@@ -106,21 +107,21 @@ form.login-form {
 }
 
 .signup-link {
-  color: #8e2de2;
+  color: var(--color-primary);
   text-decoration: none;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
   font-weight: 600;
   transition: color 0.3s;
 }
 
 .signup-link:hover {
-  color: #4a00e0;
+  color: var(--color-primary-light);
   text-decoration: underline;
 }
 
 .signup-text {
-  color: #666;
-  background-color: #ffffff;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
   font-size: 14px;
 }
 
@@ -134,11 +135,11 @@ form.login-form {
 .input-wrapper input {
   width: 100%;
   padding: 15px;
-  border: 2px solid #e1e1e1;
+  border: 2px solid var(--color-border);
   border-radius: 10px;
   font-size: 15px;
   transition: all 0.3s ease;
-  background: #fff;
+  background: var(--color-surface);
   outline: none;
 }
 
@@ -148,8 +149,8 @@ form.login-form {
 }
 
 .input-wrapper input:focus {
-  border-color: #8e2de2;
-  box-shadow: 0 0 0 3px rgba(142, 45, 226, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);
 }
 
 .input-icon {
@@ -157,7 +158,7 @@ form.login-form {
   left: 15px;
   top: 50%;
   transform: translateY(-50%);
-  color: #8e2de2;
+  color: var(--color-primary);
   font-size: 18px;
 }
 
@@ -166,7 +167,7 @@ form.login-form {
 }
 
 .error-message {
-  color: #ff4757;
+  color: var(--color-danger);
   font-size: 14px;
   text-align: center;
   margin: 15px 0;
@@ -192,8 +193,8 @@ form.login-form {
 .login-button {
   width: 100%;
   padding: 15px;
-  background: linear-gradient(90deg, #8e2de2, #4a00e0);
-  color: white;
+  background: var(--gradient-primary);
+  color: var(--color-surface);
   border: none;
   border-radius: 10px;
   font-size: 16px;
@@ -221,18 +222,18 @@ form.login-form {
 }
 
 .login-button:hover:not(:disabled) {
-  background: linear-gradient(90deg, #7928ca, #3b0d9c);
-  box-shadow: 0 5px 15px rgba(142, 45, 226, 0.3);
+  background: var(--color-primary);
+  box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
   transform: translateY(-2px);
 }
 
 .login-button:disabled {
-  background: linear-gradient(90deg, #ccc, #999);
+  background: linear-gradient(90deg, var(--color-text-muted), var(--color-text-secondary));
   cursor: not-allowed;
 }
 
 .loading {
-  background: linear-gradient(-45deg, #8e2de2, #4a00e0, #8e2de2);
+  background: linear-gradient(-45deg, var(--color-primary), var(--color-primary-light), var(--color-primary));
   background-size: 200% 200%;
   animation: gradient 1.5s ease infinite;
 }
@@ -254,38 +255,38 @@ form.login-form {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .remember-me {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .remember-me input {
   width: 16px;
   height: 16px;
-  accent-color: #8e2de2;
+  accent-color: var(--color-primary);
 }
 
 .remember-me label {
   margin-bottom: 0;
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-secondary);
 }
 
 .forgot-password {
   font-size: 14px;
-  color: #8e2de2;
+  color: var(--color-primary);
   text-decoration: none;
   transition: color 0.3s;
-  background-color: #ffffff;
+  background-color: var(--color-surface);
 }
 
 .forgot-password:hover {
-  color: #4a00e0;
+  color: var(--color-primary-light);
   text-decoration: underline;
 }
 

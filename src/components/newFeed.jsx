@@ -284,7 +284,7 @@ export default function NewFeed() {
           {errorMessage && (
             <div
               className="error-message"
-              style={{ color: "red", marginBottom: 8 }}
+              style={{ color: "var(--color-danger)", marginBottom: 8 }}
             >
               {errorMessage}
             </div>

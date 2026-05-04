@@ -31,7 +31,7 @@ export default function MainContainer() {
     }
   }, [tabId]);
 
-  const QuickActionCard = ({ icon: Icon, title, description, link, color = "#667eea" }) => (
+  const QuickActionCard = ({ icon: Icon, title, description, link, colorClass = "accent-primary" }) => (
     <motion.div
       className="quick-action-card"
       whileHover={{ scale: 1.02, y: -5 }}
@@ -41,7 +41,7 @@ export default function MainContainer() {
       transition={{ duration: 0.3 }}
     >
       <Link to={link} style={{ textDecoration: 'none', color: 'inherit' }}>
-        <div className="action-icon" style={{ background: `${color}20`, color }}>
+        <div className={`action-icon ${colorClass}`}>
           <Icon size={24} />
         </div>
         <h3>{title}</h3>
@@ -50,14 +50,14 @@ export default function MainContainer() {
     </motion.div>
   );
 
-  const StatCard = ({ icon: Icon, title, value, change, color = "#667eea" }) => (
+  const StatCard = ({ icon: Icon, title, value, change, colorClass = "accent-primary" }) => (
     <motion.div
       className="stat-card-mini"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="stat-icon" style={{ background: `${color}20`, color }}>
+      <div className={`stat-icon ${colorClass}`}>
         <Icon size={20} />
       </div>
       <div className="stat-content">
@@ -106,27 +106,27 @@ export default function MainContainer() {
               title="Môn học"
               value="8"
               change="12"
-              color="#10b981"
+              colorClass="accent-success"
             />
             <StatCard
               icon={Calendar}
               title="Lịch học hôm nay"
               value="3"
-              color="#f59e0b"
+              colorClass="accent-warning"
             />
             <StatCard
               icon={Award}
               title="Điểm trung bình"
               value="8.5"
               change="5"
-              color="#8b5cf6"
+              colorClass="accent-primary"
             />
             <StatCard
               icon={Activity}
               title="Hoạt động"
               value="15"
               change="8"
-              color="#ef4444"
+              colorClass="accent-danger"
             />
           </div>
 
@@ -138,28 +138,28 @@ export default function MainContainer() {
                 title="Xem lịch học"
                 description="Kiểm tra lịch học và lịch thi"
                 link="/schedule"
-                color="#3b82f6"
+                colorClass="accent-primary"
               />
               <QuickActionCard
                 icon={MessageSquare}
                 title="Chat & Yêu cầu"
                 description="Tham gia chat và tạo yêu cầu mở lớp"
                 link="/chat-page"
-                color="#10b981"
+                colorClass="accent-success"
               />
               <QuickActionCard
                 icon={BookOpen}
                 title="Khóa học"
                 description="Xem thông tin các khóa học"
                 link="/student-dashboard"
-                color="#f59e0b"
+                colorClass="accent-warning"
               />
               <QuickActionCard
                 icon={Users}
                 title="Cộng đồng"
                 description="Kết nối với bạn bè và giảng viên"
                 link="/chat-page"
-                color="#8b5cf6"
+                colorClass="accent-primary"
               />
             </div>
           </div>
@@ -200,25 +200,25 @@ export default function MainContainer() {
               icon={Users}
               title="Lớp phụ trách"
               value="5"
-              color="#10b981"
+              colorClass="accent-success"
             />
             <StatCard
               icon={Calendar}
               title="Lịch dạy hôm nay"
               value="4"
-              color="#f59e0b"
+              colorClass="accent-warning"
             />
             <StatCard
               icon={BookOpen}
               title="Môn giảng dạy"
               value="3"
-              color="#8b5cf6"
+              colorClass="accent-primary"
             />
             <StatCard
               icon={Clock}
               title="Giờ dạy tuần này"
               value="18"
-              color="#ef4444"
+              colorClass="accent-danger"
             />
           </div>
 
@@ -230,28 +230,28 @@ export default function MainContainer() {
                 title="Lịch giảng dạy"
                 description="Xem lịch dạy và quản lý thời khóa biểu"
                 link="/teacher-schedule"
-                color="#3b82f6"
+                colorClass="accent-primary"
               />
               <QuickActionCard
                 icon={BookOpen}
                 title="Phê duyệt yêu cầu"
                 description="Xử lý yêu cầu mở lớp từ sinh viên"
                 link="/approve-requests"
-                color="#10b981"
+                colorClass="accent-success"
               />
               <QuickActionCard
                 icon={MessageSquare}
                 title="Chat với sinh viên"
                 description="Tương tác và hỗ trợ sinh viên"
                 link="/chat-page"
-                color="#f59e0b"
+                colorClass="accent-warning"
               />
               <QuickActionCard
                 icon={Users}
                 title="Quản lý lớp"
                 description="Xem thông tin lớp và sinh viên"
                 link="/teacher-dashboard"
-                color="#8b5cf6"
+                colorClass="accent-primary"
               />
             </div>
           </div>
@@ -290,27 +290,27 @@ export default function MainContainer() {
               icon={BookOpen}
               title="Yêu cầu chờ duyệt"
               value="12"
-              color="#f59e0b"
+              colorClass="accent-warning"
             />
             <StatCard
               icon={Users}
               title="Sinh viên"
               value="450"
               change="8"
-              color="#10b981"
+              colorClass="accent-success"
             />
             <StatCard
               icon={Award}
               title="Đã phê duyệt"
               value="28"
               change="15"
-              color="#8b5cf6"
+              colorClass="accent-primary"
             />
             <StatCard
               icon={Activity}
               title="Hoạt động hôm nay"
               value="6"
-              color="#ef4444"
+              colorClass="accent-danger"
             />
           </div>
 
@@ -322,28 +322,28 @@ export default function MainContainer() {
                 title="Phê duyệt yêu cầu"
                 description="Xử lý các yêu cầu mở lớp học phần"
                 link="/approve-requests"
-                color="#f59e0b"
+                colorClass="accent-warning"
               />
               <QuickActionCard
                 icon={Calendar}
                 title="Xem lịch"
                 description="Kiểm tra lịch học và lịch thi"
                 link="/schedule"
-                color="#3b82f6"
+                colorClass="accent-primary"
               />
               <QuickActionCard
                 icon={MessageSquare}
                 title="Thảo luận"
                 description="Tham gia thảo luận với giảng viên"
                 link="/chat-page"
-                color="#10b981"
+                colorClass="accent-success"
               />
               <QuickActionCard
                 icon={Users}
                 title="Quản lý"
                 description="Quản lý sinh viên và giảng viên"
                 link="/approve-requests"
-                color="#8b5cf6"
+                colorClass="accent-primary"
               />
             </div>
           </div>

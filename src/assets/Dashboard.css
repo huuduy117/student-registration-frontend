@@ -1,7 +1,7 @@
 .dashboard-container {
   display: flex;
   min-height: 100vh;
-  background-color: #f3f5f9;
+  background-color: var(--color-background);
 }
 
 .dashboard-main {
@@ -15,15 +15,16 @@
 }
 
 .dashboard-section {
-  background: white;
+  background: var(--color-surface);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.06);
+  border: 1px solid var(--color-border);
   margin-bottom: 20px;
 }
 
 .dashboard-section h2 {
-  color: #333;
+  color: var(--color-text-primary);
   margin-bottom: 15px;
   font-size: 18px;
 }

@@ -288,7 +288,7 @@ const ApproveRequestsPage = () => {
                     <CheckCircle size={20} />
                   </div>
                 </div>
-                <div className="stat-value" style={{ color: "#10b981" }}>
+                <div className="stat-value" style={{ color: "var(--color-success)" }}>
                   {stats.hasTeacher}
                 </div>
               </div>
@@ -300,7 +300,7 @@ const ApproveRequestsPage = () => {
                     <Clock size={20} />
                   </div>
                 </div>
-                <div className="stat-value" style={{ color: "#f59e0b" }}>
+                <div className="stat-value" style={{ color: "var(--color-warning)" }}>
                   {stats.noTeacher}
                 </div>
               </div>

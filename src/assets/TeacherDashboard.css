@@ -1,7 +1,7 @@
 .teacher-dashboard {
     display: flex;
     min-height: 100vh;
-    background-color: #f3f5f9;
+    background-color: var(--color-background);
   }
   
   .dashboard-content {
@@ -16,14 +16,15 @@
     align-items: center;
     margin-bottom: 20px;
     padding: 20px;
-    background-color: white;
+    background-color: var(--color-surface);
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(17, 24, 39, 0.06);
+    border: 1px solid var(--color-border);
   }
   
   .dashboard-header h1 {
     font-size: 24px;
-    color: #333;
+    color: var(--color-text-primary);
     margin: 0;
   }
   
@@ -42,7 +43,7 @@
   
   .dashboard-header .user-name {
     font-weight: 600;
-    color: #333;
+    color: var(--color-text-primary);
   }
   
   .dashboard-grid {
@@ -53,10 +54,11 @@
   }
   
   .dashboard-card {
-    background-color: white;
+    background-color: var(--color-surface);
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(17, 24, 39, 0.06);
+    border: 1px solid var(--color-border);
     transition: transform 0.3s ease;
   }
   
@@ -66,7 +68,7 @@
   
   .dashboard-card h2 {
     font-size: 18px;
-    color: #333;
+    color: var(--color-text-primary);
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -75,11 +77,11 @@
   }
   
   .dashboard-card h2 svg {
-    color: #9854cb;
+    color: var(--color-primary);
   }
   
   .dashboard-card .card-content {
-    color: #555;
+    color: var(--color-text-secondary);
   }
   
   .dashboard-card .card-footer {
@@ -88,19 +90,19 @@
     align-items: center;
     margin-top: 15px;
     padding-top: 15px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid var(--color-border);
   }
   
   .dashboard-card .card-stat {
     font-size: 24px;
     font-weight: 700;
-    color: #9854cb;
+    color: var(--color-primary);
   }
   
   .dashboard-card .card-action {
     padding: 8px 12px;
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--color-background);
+    color: var(--color-text-secondary);
     border: none;
     border-radius: 6px;
     font-size: 14px;
@@ -109,8 +111,8 @@
   }
   
   .dashboard-card .card-action:hover {
-    background-color: #9854cb;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
   }
   
   .class-requests-section {
@@ -122,7 +124,7 @@
   
   .class-requests-section h2 {
     font-size: 18px;
-    color: #333;
+    color: var(--color-text-primary);
     margin-top: 0;
     margin-bottom: 15px;
     display: flex;
@@ -131,7 +133,7 @@
   }
   
   .class-requests-section h2 svg {
-    color: #9854cb;
+    color: var(--color-primary);
   }
   
   .requests-table {
@@ -143,17 +145,17 @@
   .requests-table td {
     padding: 12px 15px;
     text-align: left;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid var(--color-border);
   }
   
   .requests-table th {
     font-weight: 600;
-    color: #333;
-    background-color: #f8f9fa;
+    color: var(--color-text-primary);
+    background-color: var(--color-background);
   }
   
   .requests-table tr:hover {
-    background-color: #f6f0ff;
+    background-color: var(--color-primary-soft);
   }
   
   .status-badge {
@@ -165,23 +167,23 @@
   }
   
   .status-badge.pending {
-    background-color: #fff8e1;
-    color: #f57c00;
+    background-color: var(--color-warning-soft);
+    color: var(--color-warning);
   }
   
   .status-badge.approved {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: var(--color-success-soft);
+    color: var(--color-success);
   }
   
   .status-badge.rejected {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger);
   }
   
   .status-badge.cancelled {
-    background-color: #f5f5f5;
-    color: #757575;
+    background-color: var(--color-background);
+    color: var(--color-text-muted);
   }
   
   .action-buttons {
@@ -199,32 +201,32 @@
   }
   
   .approve-button {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background-color: var(--color-success-soft);
+    color: var(--color-success);
   }
   
   .approve-button:hover {
-    background-color: #2e7d32;
+    background-color: var(--color-success);
     color: white;
   }
   
   .reject-button {
-    background-color: #ffebee;
-    color: #c62828;
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger);
   }
   
   .reject-button:hover {
-    background-color: #c62828;
+    background-color: var(--color-danger);
     color: white;
   }
   
   .view-button {
-    background-color: #f0f2f5;
-    color: #333;
+    background-color: var(--color-background);
+    color: var(--color-text-secondary);
   }
   
   .view-button:hover {
-    background-color: #9854cb;
+    background-color: var(--color-primary);
     color: white;
   }
   

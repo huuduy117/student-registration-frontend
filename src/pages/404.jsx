@@ -12,7 +12,7 @@ const UnauthorizedPage = () => {
       <a
         href="/login"
         style={{
-          color: "#9854cb",
+          color: "var(--color-primary)",
           textDecoration: "none",
         }}
       >

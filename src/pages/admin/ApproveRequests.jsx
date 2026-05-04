@@ -8,9 +8,9 @@ import SideBar from "../../components/sideBar";
 import "../../assets/UserManagement.css";
 
 const STATUS_OPTIONS = [
-  { label: "Đã gửi", value: "Submitted", color: "#3b82f6", icon: Clock },
-  { label: "Đã duyệt", value: "Approved", color: "#10b981", icon: CheckCircle },
-  { label: "Từ chối", value: "Rejected", color: "#ef4444", icon: XCircle },
+  { label: "Đã gửi", value: "Submitted", color: "var(--color-primary)", icon: Clock },
+  { label: "Đã duyệt", value: "Approved", color: "var(--color-success)", icon: CheckCircle },
+  { label: "Từ chối", value: "Rejected", color: "var(--color-danger)", icon: XCircle },
 ];
 
 const AdminApproveRequests = () => {
@@ -148,7 +148,7 @@ const AdminApproveRequests = () => {
 
   const getStatusInfo = (status) => {
     const statusOption = STATUS_OPTIONS.find((opt) => opt.value === status);
-    return statusOption || { label: status, color: "#64748b", icon: Clock };
+    return statusOption || { label: status, color: "var(--color-text-secondary)", icon: Clock };
   };
 
   const filteredRequests = requests.filter(request => 
@@ -219,7 +219,7 @@ const AdminApproveRequests = () => {
                 <Clock size={20} />
               </div>
             </div>
-            <div className="stat-value" style={{ color: '#3b82f6' }}>{statusCounts.Submitted}</div>
+            <div className="stat-value" style={{ color: 'var(--color-primary)' }}>{statusCounts.Submitted}</div>
           </div>
 
           <div className="stat-card">
@@ -229,7 +229,7 @@ const AdminApproveRequests = () => {
                 <CheckCircle size={20} />
               </div>
             </div>
-            <div className="stat-value" style={{ color: '#10b981' }}>{statusCounts.Approved}</div>
+            <div className="stat-value" style={{ color: 'var(--color-success)' }}>{statusCounts.Approved}</div>
           </div>
 
           <div className="stat-card">
@@ -275,8 +275,8 @@ const AdminApproveRequests = () => {
           {loading && !openDialog ? (
             <div className="loading-spinner" />
           ) : filteredRequests.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem', color: '#64748b' }}>
-              <BookOpen size={64} color="#cbd5e1" />
+            <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-secondary)' }}>
+              <BookOpen size={64} color="var(--color-border)" />
               <h3 style={{ marginTop: '1rem' }}>Không có yêu cầu nào</h3>
               <p>Chưa có yêu cầu mở lớp nào cần xử lý</p>
             </div>
@@ -312,7 +312,7 @@ const AdminApproveRequests = () => {
                         <td>
                           <div>
                             <div style={{ fontWeight: 500 }}>{request.courseName}</div>
-                            <div style={{ color: "#64748b", fontSize: "0.85rem" }}>
+                            <div style={{ color: "var(--color-text-secondary)", fontSize: "0.85rem" }}>
                               {request.classCode}
                             </div>
                           </div>
@@ -323,7 +323,7 @@ const AdminApproveRequests = () => {
                             display: 'inline-flex', 
                             alignItems: 'center', 
                             gap: '0.5rem',
-                            background: '#f1f5f9',
+                            background: 'var(--color-background)',
                             padding: '0.25rem 0.75rem',
                             borderRadius: '20px',
                             fontSize: '0.85rem',
@@ -385,12 +385,12 @@ const AdminApproveRequests = () => {
                 style={{ maxWidth: '700px' }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <h2 style={{ margin: 0, color: '#1e293b' }}>Chi tiết yêu cầu mở lớp</h2>
+                  <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>Chi tiết yêu cầu mở lớp</h2>
                   <button
                     onClick={handleCloseDialog}
                     style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    <X size={24} color="#64748b" />
+                    <X size={24} color="var(--color-text-secondary)" />
                   </button>
                 </div>
 
@@ -447,25 +447,25 @@ const AdminApproveRequests = () => {
 
                 {history.length > 0 && (
                   <div style={{ marginBottom: '1.5rem' }}>
-                    <h4 style={{ color: '#374151', marginBottom: '0.75rem' }}>Lịch sử xử lý</h4>
-                    <div style={{ background: '#f8fafc', borderRadius: '8px', padding: '1rem' }}>
+                    <h4 style={{ color: 'var(--color-text-primary)', marginBottom: '0.75rem' }}>Lịch sử xử lý</h4>
+                    <div style={{ background: 'var(--color-background)', borderRadius: '8px', padding: '1rem' }}>
                       {history.map((item, idx) => (
                         <div key={idx} style={{ 
                           display: 'flex', 
                           justifyContent: 'space-between', 
                           alignItems: 'center',
                           padding: '0.5rem 0',
-                          borderBottom: idx < history.length - 1 ? '1px solid #e2e8f0' : 'none'
+                          borderBottom: idx < history.length - 1 ? '1px solid var(--color-border)' : 'none'
                         }}>
                           <div>
                             <span style={{ fontWeight: 500 }}>
                               {item.oldStatus} → {item.newStatus}
                             </span>
-                            <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                               {item.changedBy}
                             </div>
                           </div>
-                          <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                          <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                             {new Date(item.changeDate).toLocaleString("vi-VN")}
                           </div>
                         </div>

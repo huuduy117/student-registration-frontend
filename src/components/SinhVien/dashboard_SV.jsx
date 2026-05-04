@@ -69,7 +69,7 @@ const DashboardSV = () => {
         (Number(overview?.completedCredits) || 0),
     },
   ];
-  const COLORS = ["#00C49F", "#FF8042"];
+  const COLORS = ["var(--color-primary)", "var(--color-primary-light)"];
 
   if (loading) return <div>Đang tải...</div>;
   if (error) return <div className="error-message">{error}</div>;

@@ -51,7 +51,13 @@ const AdminHome = () => {
     }
   };
 
-  const COLORS = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe'];
+  const COLORS = [
+    "var(--color-primary)",
+    "var(--color-primary-light)",
+    "var(--color-accent-pink)",
+    "var(--color-warning)",
+    "var(--color-success)",
+  ];
 
   const studentChartData = studentStats.byClass?.map((item, index) => ({
     name: item.class,
@@ -182,9 +188,9 @@ const AdminHome = () => {
                   <h3 className="chart-title">Phân bố sinh viên theo lớp</h3>
                   <ResponsiveContainer width="100%" height={300}>
                     <BarChart data={studentChartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="name" stroke="#64748b" />
-                      <YAxis stroke="#64748b" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+                      <XAxis dataKey="name" stroke="var(--color-text-secondary)" />
+                      <YAxis stroke="var(--color-text-secondary)" />
                       <Tooltip 
                         contentStyle={{
                           backgroundColor: 'white',
@@ -256,9 +262,9 @@ const AdminHome = () => {
                   <h3 className="chart-title">Số lớp học phần theo học kỳ</h3>
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart data={teacherChartData}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-                      <XAxis dataKey="name" stroke="#64748b" />
-                      <YAxis stroke="#64748b" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
+                      <XAxis dataKey="name" stroke="var(--color-text-secondary)" />
+                      <YAxis stroke="var(--color-text-secondary)" />
                       <Tooltip 
                         contentStyle={{
                           backgroundColor: 'white',
@@ -270,14 +276,14 @@ const AdminHome = () => {
                       <Area
                         type="monotone"
                         dataKey="classes"
-                        stroke="#667eea"
+                        stroke="var(--color-primary)"
                         fill="url(#colorGradient)"
                         strokeWidth={3}
                       />
                       <defs>
                         <linearGradient id="colorGradient" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#667eea" stopOpacity={0.8}/>
-                          <stop offset="95%" stopColor="#667eea" stopOpacity={0.1}/>
+                          <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.8}/>
+                          <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.1}/>
                         </linearGradient>
                       </defs>
                     </AreaChart>
@@ -303,7 +309,7 @@ const AdminHome = () => {
                         </tr>
                       )) || (
                         <tr>
-                          <td colSpan={3} style={{ textAlign: 'center', color: '#64748b' }}>
+                          <td colSpan={3} style={{ textAlign: 'center', color: 'var(--color-text-secondary)' }}>
                             Không có dữ liệu
                           </td>
                         </tr>

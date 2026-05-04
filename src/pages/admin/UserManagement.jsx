@@ -487,14 +487,14 @@ const AdminUserManagement = () => {
                 exit={{ scale: 0.9, opacity: 0 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <h2 style={{ margin: 0, color: '#1e293b' }}>
+                  <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>
                     {editUser ? "Sửa người dùng" : "Thêm người dùng"}
                   </h2>
                   <button
                     onClick={handleCloseDialog}
                     style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    <X size={24} color="#64748b" />
+                    <X size={24} color="var(--color-text-secondary)" />
                   </button>
                 </div>
 
@@ -591,12 +591,12 @@ const AdminUserManagement = () => {
                 exit={{ scale: 0.9, opacity: 0 }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                  <h2 style={{ margin: 0, color: '#1e293b' }}>Thông tin chi tiết</h2>
+                  <h2 style={{ margin: 0, color: 'var(--color-text-primary)' }}>Thông tin chi tiết</h2>
                   <button
                     onClick={handleCloseViewDialog}
                     style={{ background: 'none', border: 'none', cursor: 'pointer' }}
                   >
-                    <X size={24} color="#64748b" />
+                    <X size={24} color="var(--color-text-secondary)" />
                   </button>
                 </div>
 

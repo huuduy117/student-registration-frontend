@@ -135,9 +135,9 @@ const AdminSettings = () => {
       transition={{ duration: 0.3 }}
     >
       <div style={{ marginBottom: '1rem' }}>
-        <h4 style={{ margin: 0, color: '#1e293b', fontSize: '1.1rem' }}>{title}</h4>
+        <h4 style={{ margin: 0, color: 'var(--color-text-primary)', fontSize: '1.1rem' }}>{title}</h4>
         {description && (
-          <p style={{ margin: '0.25rem 0 0 0', color: '#64748b', fontSize: '0.9rem' }}>
+          <p style={{ margin: '0.25rem 0 0 0', color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
             {description}
           </p>
         )}
@@ -146,13 +146,13 @@ const AdminSettings = () => {
     </motion.div>
   );
 
-  const SystemMetric = ({ icon: Icon, label, value, unit, color = "#667eea" }) => (
+  const SystemMetric = ({ icon: Icon, label, value, unit, color = "var(--color-primary)" }) => (
     <div style={{ 
       display: 'flex', 
       alignItems: 'center', 
       gap: '1rem',
       padding: '1rem',
-      background: '#f8fafc',
+      background: 'var(--color-background)',
       borderRadius: '8px',
       border: `2px solid ${color}20`
     }}>
@@ -165,9 +165,9 @@ const AdminSettings = () => {
         <Icon size={20} />
       </div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{label}</div>
-        <div style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1e293b' }}>
-          {value} {unit && <span style={{ fontSize: '0.9rem', color: '#64748b' }}>{unit}</span>}
+        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{label}</div>
+        <div style={{ fontSize: '1.25rem', fontWeight: '600', color: 'var(--color-text-primary)' }}>
+          {value} {unit && <span style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)' }}>{unit}</span>}
         </div>
       </div>
     </div>
@@ -310,7 +310,7 @@ const AdminSettings = () => {
                       </div>
                     </div>
                     
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--color-background)', borderRadius: '8px' }}>
                       <input
                         type="checkbox"
                         checked={settings.requireTwoFactor}
@@ -319,13 +319,13 @@ const AdminSettings = () => {
                       />
                       <div>
                         <div style={{ fontWeight: '500' }}>Yêu cầu xác thực 2 bước</div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                           Bắt buộc người dùng sử dụng xác thực 2 bước
                         </div>
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--color-background)', borderRadius: '8px' }}>
                       <input
                         type="checkbox"
                         checked={settings.allowPasswordReset}
@@ -334,7 +334,7 @@ const AdminSettings = () => {
                       />
                       <div>
                         <div style={{ fontWeight: '500' }}>Cho phép đặt lại mật khẩu</div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                           Người dùng có thể đặt lại mật khẩu qua email
                         </div>
                       </div>
@@ -366,14 +366,14 @@ const AdminSettings = () => {
                       label="Người dùng hoạt động"
                       value={systemInfo.activeUsers}
                       unit="/ 1250"
-                      color="#10b981"
+                      color="var(--color-success)"
                     />
                     <SystemMetric
                       icon={HardDrive}
                       label="Sử dụng ổ đĩa"
                       value={systemInfo.diskUsage}
                       unit="%"
-                      color="#f59e0b"
+                      color="var(--color-warning)"
                     />
                   </div>
                 </SettingCard>
@@ -383,7 +383,7 @@ const AdminSettings = () => {
                   description="Các tùy chọn cấu hình hệ thống"
                 >
                   <div style={{ display: 'grid', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--color-background)', borderRadius: '8px' }}>
                       <input
                         type="checkbox"
                         checked={settings.maintenanceMode}
@@ -392,16 +392,16 @@ const AdminSettings = () => {
                       />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: '500', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <AlertTriangle size={16} color="#f59e0b" />
+                          <AlertTriangle size={16} color="var(--color-warning)" />
                           Chế độ bảo trì
                         </div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                           Tạm thời ngừng hoạt động hệ thống để bảo trì
                         </div>
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--color-background)', borderRadius: '8px' }}>
                       <input
                         type="checkbox"
                         checked={settings.cacheEnabled}
@@ -410,7 +410,7 @@ const AdminSettings = () => {
                       />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: '500' }}>Bật cache</div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                           Cải thiện hiệu suất bằng cách lưu cache
                         </div>
                       </div>
@@ -448,7 +448,7 @@ const AdminSettings = () => {
                         alignItems: 'center', 
                         gap: '1rem', 
                         padding: '1rem', 
-                        background: '#f8fafc', 
+                        background: 'var(--color-background)', 
                         borderRadius: '8px' 
                       }}>
                         <input
@@ -459,7 +459,7 @@ const AdminSettings = () => {
                         />
                         <div>
                           <div style={{ fontWeight: '500' }}>{item.label}</div>
-                          <div style={{ fontSize: '0.85rem', color: '#64748b' }}>{item.desc}</div>
+                          <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>{item.desc}</div>
                         </div>
                       </div>
                     ))}
@@ -475,7 +475,7 @@ const AdminSettings = () => {
                   description="Quản lý sao lưu và khôi phục dữ liệu"
                 >
                   <div style={{ display: 'grid', gap: '1rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: '#f8fafc', borderRadius: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', background: 'var(--color-background)', borderRadius: '8px' }}>
                       <input
                         type="checkbox"
                         checked={settings.autoBackup}
@@ -484,7 +484,7 @@ const AdminSettings = () => {
                       />
                       <div style={{ flex: 1 }}>
                         <div style={{ fontWeight: '500' }}>Sao lưu tự động</div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                           Tự động sao lưu dữ liệu theo lịch trình
                         </div>
                       </div>
@@ -505,15 +505,15 @@ const AdminSettings = () => {
                       gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
                       gap: '1rem',
                       padding: '1rem',
-                      background: '#f8fafc',
+                      background: 'var(--color-background)',
                       borderRadius: '8px'
                     }}>
                       <div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Lần sao lưu cuối</div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>Lần sao lưu cuối</div>
                         <div style={{ fontWeight: '500' }}>{systemInfo.lastBackup}</div>
                       </div>
                       <div>
-                        <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Kích thước database</div>
+                        <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>Kích thước database</div>
                         <div style={{ fontWeight: '500' }}>{systemInfo.databaseSize}</div>
                       </div>
                     </div>

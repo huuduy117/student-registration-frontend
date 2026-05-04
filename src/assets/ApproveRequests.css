@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-overlay);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,23 +12,24 @@
 }
 
 .reject-dialog {
-  background: white;
+  background: var(--color-surface);
   padding: 20px;
   border-radius: 8px;
   width: 400px;
   max-width: 90%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(17, 24, 39, 0.08);
+  border: 1px solid var(--color-border);
 }
 
 .reject-dialog h3 {
   margin: 0 0 15px 0;
-  color: #333;
+  color: var(--color-text-primary);
 }
 
 .reject-dialog textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   margin-bottom: 15px;
   resize: vertical;
@@ -48,13 +49,13 @@
 }
 
 .reject-dialog button:first-child {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--color-danger);
+  color: var(--color-surface);
 }
 
 .reject-dialog button:last-child {
-  background-color: #6c757d;
-  color: white;
+  background-color: var(--color-text-secondary);
+  color: var(--color-surface);
 }
 
 .reject-dialog button:disabled {
@@ -74,13 +75,13 @@
 }
 
 .approve-btn {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--color-success);
+  color: var(--color-surface);
 }
 
 .reject-btn {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--color-danger);
+  color: var(--color-surface);
 }
 
 .approve-btn:disabled,
@@ -95,8 +96,8 @@
 }
 
 .refresh-btn {
-  background-color: #4a90e2;
-  color: white;
+  background-color: var(--color-primary);
+  color: var(--color-surface);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -109,24 +110,24 @@
 }
 
 .refresh-btn:hover {
-  background-color: #357abd;
+  background-color: var(--color-primary-light);
 }
 
 .refresh-btn:disabled {
-  background-color: #ccc;
+  background-color: var(--color-text-muted);
   cursor: not-allowed;
 }
 
 .empty-state {
   text-align: center;
   padding: 2rem;
-  background-color: #f8f9fa;
+  background-color: var(--color-background);
   border-radius: 8px;
   margin: 1rem 0;
 }
 
 .empty-state p {
-  color: #6c757d;
+  color: var(--color-text-secondary);
   margin-bottom: 1rem;
 }
 
@@ -138,16 +139,17 @@
 }
 
 .stat-card {
-  background: white;
+  background: var(--color-surface);
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(17, 24, 39, 0.06);
+  border: 1px solid var(--color-border);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(17, 24, 39, 0.1);
 }
 
 .stat-header {
@@ -159,7 +161,7 @@
 
 .stat-title {
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
@@ -169,37 +171,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f8fafc;
+  background: var(--color-background);
   border-radius: 8px;
-  color: #64748b;
+  color: var(--color-text-secondary);
 }
 
 .stat-value {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text-primary);
 }
 
 .modern-select {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  background: white;
-  color: #1e293b;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .modern-select:hover {
-  border-color: #cbd5e1;
+  border-color: var(--color-border);
 }
 
 .modern-select:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-soft);
 }
 
 .section-header {
@@ -214,18 +216,18 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 1rem;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  background: var(--color-background);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
-  color: #64748b;
+  color: var(--color-text-secondary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .refresh-btn:hover {
-  background: #f1f5f9;
-  color: #1e293b;
+  background: var(--color-primary-soft);
+  color: var(--color-text-primary);
 }
 
 .teacher-status {
@@ -239,21 +241,21 @@
 }
 
 .teacher-status.has-teacher {
-  background: #dcfce7;
-  color: #10b981;
+  background: var(--color-success-soft);
+  color: var(--color-success);
 }
 
 .teacher-status.no-teacher {
-  background: #fef3c7;
-  color: #f59e0b;
+  background: var(--color-warning-soft);
+  color: var(--color-warning);
 }
 
 tr.has-teacher {
-  background: #f0fdf4;
+  background: var(--color-success-soft);
 }
 
 tr.no-teacher {
-  background: #fffbeb;
+  background: var(--color-warning-soft);
 }
 
 .action-buttons {
@@ -272,23 +274,23 @@ tr.no-teacher {
 }
 
 .approve-btn {
-  background: #10b981;
-  color: white;
+  background: var(--color-success);
+  color: var(--color-surface);
   border: none;
 }
 
 .approve-btn:hover {
-  background: #059669;
+  background: var(--color-success);
 }
 
 .reject-btn {
-  background: #ef4444;
-  color: white;
+  background: var(--color-danger);
+  color: var(--color-surface);
   border: none;
 }
 
 .reject-btn:hover {
-  background: #dc2626;
+  background: var(--color-danger);
 }
 
 .approve-btn:disabled,
