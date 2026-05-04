@@ -8,8 +8,6 @@ import "./../assets/Login.css";
 import axiosInstance from "../services/axios";
 import { normalizeRole } from "../utils/roleUtils";
 
-const API_URL = "http://localhost:5000"; // Define API URL directly in component for now
-
 const getRoleBasedRedirect = (role) => {
   const normalized = normalizeRole(role);
   switch (normalized) {
