@@ -10,18 +10,18 @@ import "./DemoAccountCard.css";
 const DEMO_ACCOUNTS = [
   {
     role: "Admin",
-    email: "admin@example.com",
+    email: "admin",
     password: "admin123",
   },
   {
     role: "Student",
-    email: "student@example.com",
-    password: "student123",
+    email: "student01",
+    password: "123456",
   },
   {
     role: "Teacher",
-    email: "teacher@example.com",
-    password: "teacher123",
+    email: "teacher01",
+    password: "123456",
   },
 ];
 
@@ -66,7 +66,7 @@ const DemoAccountCard = ({ onAutoFill }) => {
               </div>
               <div className="demo-account-credentials">
                 <div className="demo-credential-row">
-                  <span className="demo-label">Email:</span>
+                  <span className="demo-label">Username:</span>
                   <span className="demo-value">{account.email}</span>
                 </div>
                 <div className="demo-credential-row">
