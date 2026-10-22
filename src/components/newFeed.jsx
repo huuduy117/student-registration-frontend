@@ -9,12 +9,7 @@ import ParticipantsList from "./Chat/ParticipantsList";
 import RequestDetails from "./Chat/RequestDetails";
 import api from "../api/client";
 import { normalizeRole } from "../utils/roleUtils";
-
-function parseListPayload(payload) {
-  if (Array.isArray(payload)) return payload;
-  if (payload && Array.isArray(payload.data)) return payload.data;
-  return [];
-}
+import { unwrapList } from "../utils/apiPayload";
 
 function getAuthToken() {
   const tabId = sessionStorage.getItem("tabId");
@@ -81,7 +76,7 @@ export default function NewFeed() {
         headers: { Authorization: `Bearer ${token}` },
         signal,
       });
-      const requestData = parseListPayload(response.data);
+      const requestData = unwrapList(response.data);
       console.log("[newFeed] openRequests count:", requestData.length);
       return requestData;
     } catch (error) {
@@ -102,7 +97,7 @@ export default function NewFeed() {
         headers: { Authorization: `Bearer ${token}` },
         signal,
       });
-      return parseListPayload(response.data);
+      return unwrapList(response.data);
     } catch (error) {
       if (error?.code === "ERR_CANCELED") return null;
       console.error("Error fetching news:", error);
@@ -153,8 +148,8 @@ export default function NewFeed() {
       }
 
       await api.post(
-        "/api/class-requests/join",
-        { studentId: userId, sectionId },
+        "/api/students/enroll",
+        { sectionId },
         {
           headers: { Authorization: `Bearer ${getAuthToken()}` },
         }
@@ -208,7 +203,7 @@ export default function NewFeed() {
           id: request.id,
           courseName: request.courses?.name || request.course_id,
           participantCount: request.participant_count,
-          participants: parseListPayload(response.data).map((p) => ({
+          participants: unwrapList(response.data).map((p) => ({
             studentId: p.studentId,
             fullName: p.fullName,
             class: p.className,
@@ -248,7 +243,7 @@ export default function NewFeed() {
           participantCount: request.participant_count,
           description: request.description,
           createdAt: request.submitted_at,
-          participants: parseListPayload(participantsResponse.data).map((p) => ({
+          participants: unwrapList(participantsResponse.data).map((p) => ({
             studentId: p.studentId,
             fullName: p.fullName,
             class: p.className,
@@ -340,6 +335,7 @@ export default function NewFeed() {
                             semester: request.course_sections?.semester || "",
                             batch: request.course_sections?.academic_year || "",
                             participantCount: request.participant_count,
+                            enrolledCount: request.course_sections?.enrolled_count,
                             createdAt: request.submitted_at,
                           }}
                           onJoin={handleJoinRequest}
@@ -384,6 +380,7 @@ export default function NewFeed() {
                             semester: request.course_sections?.semester || "",
                             batch: request.course_sections?.academic_year || "",
                             participantCount: request.participant_count,
+                            enrolledCount: request.course_sections?.enrolled_count,
                             createdAt: request.submitted_at,
                           }}
                           onJoin={handleJoinRequest}

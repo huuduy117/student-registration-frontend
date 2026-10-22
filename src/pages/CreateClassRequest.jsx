@@ -7,15 +7,23 @@ import axiosInstance from "../services/axios";
 import "../assets/CreateClassRequest.css";
 import { useSessionMonitor } from "../hook/useSession";
 import SimpleCaptcha from "../components/SimpleCaptcha";
+import { normalizeRole } from "../utils/roleUtils";
+import {
+  buildSubmitPayload,
+  extractApiError,
+  normalizeAvailableCourses,
+} from "../utils/classRequest";
 
 const CreateClassRequest = () => {
   const [formData, setFormData] = useState({
-    maLopHP: "",
+    courseId: "",
+    participantCount: "1",
     description: "",
   });
   const [availableCourses, setAvailableCourses] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [pageError, setPageError] = useState(null);
+  const [submitError, setSubmitError] = useState(null);
   const [studentInfo, setStudentInfo] = useState(null);
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -31,7 +39,7 @@ const CreateClassRequest = () => {
       sessionStorage.getItem(`auth_${tabId}`) || "{}",
     );
 
-    if (!authData.userId || authData.userRole !== "SinhVien") {
+    if (!authData.userId || normalizeRole(authData.userRole) !== "Student") {
       // Redirect non-students to home page
       navigate("/home");
       return;
@@ -43,24 +51,25 @@ const CreateClassRequest = () => {
         const response = await axiosInstance.get(
           `/api/students/${authData.userId}`,
         );
-        setStudentInfo(response.data);
+        setStudentInfo(response.data?.data || null);
       } catch (error) {
+        // Non-fatal: submitting only needs the JWT, so keep the form usable.
         console.error("Error fetching student info:", error);
-        setError("Không thể lấy thông tin sinh viên");
       }
     };
 
-    // Fetch available courses
+    // Fetch courses that can be requested. The endpoint returns sections, so
+    // they are collapsed into distinct courses here.
     const fetchAvailableCourses = async () => {
       try {
         setLoading(true);
         const response = await axiosInstance.get(
           "/api/class-requests/available-courses",
         );
-        setAvailableCourses(response.data);
+        setAvailableCourses(normalizeAvailableCourses(response.data?.data));
       } catch (error) {
         console.error("Error fetching available courses:", error);
-        setError("Không thể lấy danh sách môn học");
+        setPageError("Không thể lấy danh sách môn học");
       } finally {
         setLoading(false);
       }
@@ -72,47 +81,47 @@ const CreateClassRequest = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData((current) => ({ ...current, [name]: value }));
+    setSubmitError(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!captchaVerified) {
-      setError("Vui lòng xác nhận CAPTCHA");
+      setSubmitError("Vui lòng xác nhận CAPTCHA");
       return;
     }
 
-    if (!formData.maLopHP) {
-      setError("Vui lòng chọn lớp học phần");
+    if (!formData.courseId) {
+      setSubmitError("Vui lòng chọn môn học");
+      return;
+    }
+
+    const participantCount = Number(formData.participantCount);
+    if (!Number.isInteger(participantCount) || participantCount < 1) {
+      setSubmitError("Số lượng sinh viên dự kiến phải là số nguyên ≥ 1");
       return;
     }
 
     try {
       setSubmitting(true);
-      setError(null);
+      setSubmitError(null);
 
-      const tabId = sessionStorage.getItem("tabId");
-      const authData = JSON.parse(
-        sessionStorage.getItem(`auth_${tabId}`) || "{}",
+      await axiosInstance.post(
+        "/api/class-requests/submit",
+        buildSubmitPayload({
+          courseId: formData.courseId,
+          participantCount,
+          description: formData.description,
+        }),
       );
-
-      await axiosInstance.post("/api/class-requests", {
-        maSV: authData.userId,
-        maLopHP: formData.maLopHP,
-        description: formData.description,
-        // The student creating the request is automatically counted as the first participant
-        participants: [{ maSV: authData.userId }],
-      });
 
       // Redirect to chat page after successful creation
       navigate("/chat-page");
     } catch (error) {
       console.error("Error creating class request:", error);
-      setError(error.response?.data?.message || "Lỗi khi tạo yêu cầu mở lớp");
+      setSubmitError(extractApiError(error));
     } finally {
       setSubmitting(false);
     }
@@ -123,8 +132,8 @@ const CreateClassRequest = () => {
   };
 
   // Get selected course details
-  const selectedCourse = availableCourses?.find(
-    (course) => course.maLopHP === formData.maLopHP,
+  const selectedCourse = availableCourses.find(
+    (course) => course.courseId === formData.courseId,
   );
 
   return (
@@ -136,8 +145,8 @@ const CreateClassRequest = () => {
 
           {loading ? (
             <div className="loading-message">Đang tải dữ liệu...</div>
-          ) : error ? (
-            <div className="error-message">{error}</div>
+          ) : pageError ? (
+            <div className="error-message">{pageError}</div>
           ) : (
             <form onSubmit={handleSubmit} className="create-request-form">
               {studentInfo && (
@@ -145,85 +154,116 @@ const CreateClassRequest = () => {
                   <h2>Thông tin sinh viên</h2>
                   <div className="info-row">
                     <div className="info-item">
-                      <span className="info-label">MSSV:</span>
-                      <span className="info-value">{studentInfo.maSV}</span>
-                    </div>
-                    <div className="info-item">
                       <span className="info-label">Họ tên:</span>
-                      <span className="info-value">{studentInfo.hoTen}</span>
+                      <span className="info-value">
+                        {studentInfo.fullName || "—"}
+                      </span>
                     </div>
                     <div className="info-item">
                       <span className="info-label">Lớp:</span>
-                      <span className="info-value">{studentInfo.maLop}</span>
+                      <span className="info-value">
+                        {studentInfo.className || "—"}
+                      </span>
+                    </div>
+                    <div className="info-item">
+                      <span className="info-label">Email:</span>
+                      <span className="info-value">
+                        {studentInfo.email || "—"}
+                      </span>
                     </div>
                   </div>
                 </div>
               )}
 
               <div className="form-group">
-                <label htmlFor="maLopHP">Lớp học phần</label>
+                <label htmlFor="courseId">Môn học cần mở lớp</label>
                 <select
-                  id="maLopHP"
-                  name="maLopHP"
-                  value={formData.maLopHP}
+                  id="courseId"
+                  name="courseId"
+                  value={formData.courseId}
                   onChange={handleChange}
                   className="form-input"
                   required
                 >
-                  <option value="">-- Chọn lớp học phần --</option>
-                  {availableCourses?.map((course) => (
-                    <option key={course.maLopHP} value={course.maLopHP}>
-                      {course.tenMH} - {course.maLopHP} ({course.hocKy}{" "}
-                      {course.namHoc})
+                  <option value="">-- Chọn môn học --</option>
+                  {availableCourses.map((course) => (
+                    <option key={course.courseId} value={course.courseId}>
+                      {course.courseName}
+                      {course.credits != null ? ` (${course.credits} tín chỉ)` : ""}
                     </option>
                   ))}
                 </select>
+                {availableCourses.length === 0 && (
+                  <p className="form-hint">
+                    Hiện không có môn học nào đang mở để gửi yêu cầu.
+                  </p>
+                )}
               </div>
 
               {selectedCourse && (
                 <div className="course-details">
-                  <h2>Thông tin lớp học phần</h2>
+                  <h2>Thông tin môn học</h2>
                   <div className="info-row">
                     <div className="info-item">
                       <span className="info-label">Môn học:</span>
-                      <span className="info-value">{selectedCourse.tenMH}</span>
-                    </div>
-                    <div className="info-item">
-                      <span className="info-label">Mã lớp:</span>
                       <span className="info-value">
-                        {selectedCourse.maLopHP}
+                        {selectedCourse.courseName}
                       </span>
                     </div>
-                    <div className="info-item">
-                      <span className="info-label">Học kỳ:</span>
-                      <span className="info-value">
-                        {selectedCourse.hocKy} {selectedCourse.namHoc}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="info-row">
                     <div className="info-item">
                       <span className="info-label">Số tín chỉ:</span>
                       <span className="info-value">
-                        {selectedCourse.soTinChi}
+                        {selectedCourse.credits ?? "—"}
                       </span>
                     </div>
-                    <div className="info-item">
-                      <span className="info-label">Sĩ số hiện tại:</span>
-                      <span className="info-value">
-                        {selectedCourse.soLuongDangKy || 0}/
-                        {selectedCourse.siSoToiDa}
-                      </span>
+                    {selectedCourse.sectionCount > 0 && (
+                      <div className="info-item">
+                        <span className="info-label">Lớp đang mở:</span>
+                        <span className="info-value">
+                          {selectedCourse.sectionCount}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {selectedCourse.sectionCount > 0 && (
+                    <div className="info-row">
+                      <div className="info-item">
+                        <span className="info-label">Sĩ số hiện tại:</span>
+                        <span className="info-value">
+                          {selectedCourse.enrolledCount}/{selectedCourse.capacity}
+                        </span>
+                      </div>
                     </div>
+                  )}
+                  <div className="info-row">
                     <div className="info-item">
                       <span className="info-label">Trạng thái:</span>
                       <span className="info-value status-open">
-                        Đang mở đăng ký
+                        {selectedCourse.sectionCount > 0
+                          ? "Đang mở đăng ký"
+                          : "Chưa có lớp — có thể gửi yêu cầu"}
                       </span>
                     </div>
                   </div>
                 </div>
               )}
+
+              <div className="form-group">
+                <label htmlFor="participantCount">
+                  Số lượng sinh viên dự kiến
+                </label>
+                <input
+                  id="participantCount"
+                  name="participantCount"
+                  type="number"
+                  min="1"
+                  step="1"
+                  value={formData.participantCount}
+                  onChange={handleChange}
+                  className="form-input"
+                  required
+                />
+              </div>
 
               <div className="form-group">
                 <label htmlFor="description">
@@ -243,6 +283,12 @@ const CreateClassRequest = () => {
               <div className="form-group captcha-group">
                 <SimpleCaptcha onVerify={handleCaptchaVerify} />
               </div>
+
+              {submitError && (
+                <div className="error-message" role="alert">
+                  {submitError}
+                </div>
+              )}
 
               <div className="form-actions">
                 <button

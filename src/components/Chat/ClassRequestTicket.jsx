@@ -48,9 +48,20 @@ const ClassRequestTicket = ({
           </span>
         </div>
         <div className="ticket-meta">
-          <span className="participant-count">
-            👥 {request.participantCount}
+          <span
+            className="participant-count"
+            title="Số lượng sinh viên dự kiến khi tạo yêu cầu"
+          >
+            👥 {request.participantCount ?? 0} dự kiến
           </span>
+          {request.enrolledCount != null && (
+            <span
+              className="participant-count"
+              title="Số sinh viên đã đăng ký thực tế"
+            >
+              ✅ {request.enrolledCount} đã ĐK
+            </span>
+          )}
           <span className="created-at">{formatDate(request.createdAt)}</span>
         </div>
       </div>

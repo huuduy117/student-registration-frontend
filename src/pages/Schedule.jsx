@@ -9,65 +9,51 @@ import * as XLSX from "xlsx";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import { saveAs } from "file-saver";
+import {
+  DAY_KEYS,
+  createEmptyWeek,
+  filterByViewMode,
+  formatDate,
+  formatPeriods,
+  generateWeekDates,
+  getCourseCode,
+  getCourseName,
+  getDayName,
+  getRoom,
+  getSectionCode,
+  getStartOfWeek,
+  getTeacherName,
+  groupByTimePeriod,
+  normalizeWeekSchedule,
+  parseDateInput,
+  toDateInputValue,
+} from "../utils/schedule";
+
+const ClassItem = ({ item }) => {
+  const code = [getSectionCode(item), getCourseCode(item)].filter(Boolean).join(" - ");
+
+  return (
+    <div className="class-item">
+      <div className="class-name">{getCourseName(item)}</div>
+      {code && <div className="class-code">{code}</div>}
+      <div className="class-time">{formatPeriods(item)}</div>
+      <div className="class-location">Phòng: {getRoom(item)}</div>
+      <div className="class-teacher">GV: {getTeacherName(item)}</div>
+    </div>
+  );
+};
 
 const Schedule = () => {
-  const [schedule, setSchedule] = useState({
-    monday: [],
-    tuesday: [],
-    wednesday: [],
-    thursday: [],
-    friday: [],
-    saturday: [],
-    sunday: [],
-  });
+  const [schedule, setSchedule] = useState(createEmptyWeek);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentWeek, setCurrentWeek] = useState(new Date());
   const [userId, setUserId] = useState(null);
   const [viewMode, setViewMode] = useState("all"); // 'all', 'classes', 'exams'
+  const [exportMenuOpen, setExportMenuOpen] = useState(false);
 
   // Use the session monitor
   useSessionMonitor();
-
-  // Helper function to format dates
-  const formatDate = (date) => {
-    return date.toLocaleDateString("vi-VN", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  };
-
-  // Helper function to get day name
-  const getDayName = (date) => {
-    const days = [
-      "Chủ nhật",
-      "Thứ 2",
-      "Thứ 3",
-      "Thứ 4",
-      "Thứ 5",
-      "Thứ 6",
-      "Thứ 7",
-    ];
-    return days[date.getDay()];
-  };
-
-  // Get start of week (Monday)
-  const getStartOfWeek = (date) => {
-    const d = new Date(date);
-    const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
-    return new Date(d.setDate(diff));
-  };
-
-  // Generate week dates
-  const generateWeekDates = (startDate) => {
-    return Array.from({ length: 7 }, (_, i) => {
-      const date = new Date(startDate);
-      date.setDate(date.getDate() + i);
-      return date;
-    });
-  };
 
   useEffect(() => {
     // Get user info from session storage
@@ -88,19 +74,16 @@ const Schedule = () => {
       setError(null);
 
       try {
-        const weekStart = getStartOfWeek(currentWeek)
-          .toISOString()
-          .split("T")[0];
+        const weekStart = toDateInputValue(getStartOfWeek(currentWeek));
         const response = await axiosInstance.get(
           `/api/schedule/${userId}/week`,
-          {
-            params: { weekStart },
-          },
+          { params: { weekStart } },
         );
-        setSchedule(response.data.schedule);
+        setSchedule(normalizeWeekSchedule(response.data?.schedule));
       } catch (err) {
         console.error("Error fetching schedule:", err);
         setError("Không thể lấy thời khóa biểu");
+        setSchedule(createEmptyWeek());
       } finally {
         setLoading(false);
       }
@@ -125,96 +108,45 @@ const Schedule = () => {
     setCurrentWeek(new Date());
   };
 
-  // Convert period numbers to time slots
-  const getTietDisplay = (tietBD, tietKT) => {
-    // Extract numbers from tiet strings if they contain "Tiet"
-    const startNum = tietBD.includes("Tiet")
-      ? tietBD.replace("Tiet", "")
-      : tietBD;
-    const endNum = tietKT.includes("Tiet")
-      ? tietKT.replace("Tiet", "")
-      : tietKT;
-    return `Tiết: ${startNum} - ${endNum}`;
-  };
-
-  // Group schedule items by time period
-  const groupByTimePeriod = (items) => {
-    return items.reduce(
-      (acc, item) => {
-        const timeStr = item.tietBD;
-        let tietNum;
-
-        if (timeStr.includes(":")) {
-          // If it's time format, convert to period number
-          const hour = Number.parseInt(timeStr.split(":")[0]);
-          if (hour < 12) tietNum = 1;
-          else if (hour < 17) tietNum = 7;
-          else tietNum = 13;
-        } else {
-          // If it's already period format
-          tietNum =
-            Number.parseInt(timeStr.replace("Tiet", "")) ||
-            Number.parseInt(timeStr);
-        }
-
-        if (tietNum >= 1 && tietNum <= 6) {
-          acc.morning.push(item);
-        } else if (tietNum >= 7 && tietNum <= 12) {
-          acc.afternoon.push(item);
-        } else {
-          acc.evening.push(item);
-        }
-        return acc;
-      },
-      { morning: [], afternoon: [], evening: [] },
-    );
-  };
-
   // Generate the week dates
   const weekStart = getStartOfWeek(currentWeek);
   const weekDates = generateWeekDates(weekStart);
 
-  const days = [
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-    "sunday",
-  ];
-  const groupedSchedule = days.map((day) =>
-    groupByTimePeriod(schedule[day] || []),
+  const groupedSchedule = DAY_KEYS.map((day) =>
+    groupByTimePeriod(filterByViewMode(schedule[day] || [], viewMode)),
   );
+
+  const timeRows = [
+    { label: "Sáng", slot: "morning" },
+    { label: "Chiều", slot: "afternoon" },
+    { label: "Tối", slot: "evening" },
+  ];
+  if (groupedSchedule.some((dayGroup) => dayGroup.unscheduled.length > 0)) {
+    timeRows.push({ label: "Chưa xếp tiết", slot: "unscheduled" });
+  }
+
+  const collectRows = () => {
+    const rows = [];
+    DAY_KEYS.forEach((day, index) => {
+      filterByViewMode(schedule[day] || [], viewMode).forEach((item) => {
+        rows.push({ item, date: weekDates[index] });
+      });
+    });
+    return rows;
+  };
 
   // Export schedule to Excel
   const exportToExcel = () => {
-    const weekStart = getStartOfWeek(currentWeek);
-    const weekDates = generateWeekDates(weekStart);
-    const days = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
-    const data = [];
-    days.forEach((day, i) => {
-      (schedule[day] || []).forEach((item) => {
-        data.push({
-          Ngay: formatDate(weekDates[i]),
-          Thu: getDayName(weekDates[i]),
-          MonHoc: item.tenMH,
-          MaLop: item.maLopHP,
-          MaMH: item.maMH,
-          Tiet: getTietDisplay(item.tietBD, item.tietKT),
-          Phong: item.phongHoc,
-          GiangVien: item.tenGiangVien,
-        });
-      });
-    });
+    const data = collectRows().map(({ item, date }) => ({
+      Ngay: formatDate(date),
+      Thu: getDayName(date),
+      MonHoc: getCourseName(item),
+      MaLop: getSectionCode(item),
+      MaMH: getCourseCode(item),
+      Tiet: formatPeriods(item),
+      Phong: getRoom(item),
+      GiangVien: getTeacherName(item),
+    }));
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Schedule");
@@ -227,32 +159,16 @@ const Schedule = () => {
 
   // Export schedule to PDF
   const exportToPDF = () => {
-    const weekStart = getStartOfWeek(currentWeek);
-    const weekDates = generateWeekDates(weekStart);
-    const days = [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ];
-    const data = [];
-    days.forEach((day, i) => {
-      (schedule[day] || []).forEach((item) => {
-        data.push([
-          formatDate(weekDates[i]),
-          getDayName(weekDates[i]),
-          item.tenMH,
-          item.maLopHP,
-          item.maMH,
-          getTietDisplay(item.tietBD, item.tietKT),
-          item.phongHoc,
-          item.tenGiangVien,
-        ]);
-      });
-    });
+    const data = collectRows().map(({ item, date }) => [
+      formatDate(date),
+      getDayName(date),
+      getCourseName(item),
+      getSectionCode(item),
+      getCourseCode(item),
+      formatPeriods(item),
+      getRoom(item),
+      getTeacherName(item),
+    ]);
     const doc = new jsPDF();
     doc.text(`Lịch tuần bắt đầu từ ${formatDate(weekStart)}`, 10, 10);
     doc.autoTable({
@@ -275,8 +191,6 @@ const Schedule = () => {
     doc.save(`lich_tuan_${formatDate(weekStart)}.pdf`);
   };
 
-  // Dropdown for export format
-  const [exportMenuOpen, setExportMenuOpen] = useState(false);
   const handleExportClick = () => setExportMenuOpen((open) => !open);
   const handleExportFormat = (format) => {
     setExportMenuOpen(false);
@@ -317,8 +231,8 @@ const Schedule = () => {
               <div className="date-controls">
                 <input
                   type="date"
-                  value={currentWeek.toISOString().split("T")[0]}
-                  onChange={(e) => setCurrentWeek(new Date(e.target.value))}
+                  value={toDateInputValue(currentWeek)}
+                  onChange={(e) => setCurrentWeek(parseDateInput(e.target.value))}
                   className="date-input"
                 />
                 <button className="control-button" onClick={handleCurrentWeek}>
@@ -399,81 +313,21 @@ const Schedule = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {/* Morning */}
-                  <tr>
-                    <td className="time-period">Sáng</td>
-                    {groupedSchedule.map((dayGroup, dayIndex) => (
-                      <td key={dayIndex} className="schedule-cell">
-                        {dayGroup.morning.map((item, itemIndex) => (
-                          <div key={itemIndex} className="class-item">
-                            <div className="class-name">{item.tenMH}</div>
-                            <div className="class-code">
-                              {item.maLopHP} - {item.maMH}
-                            </div>
-                            <div className="class-time">
-                              {getTietDisplay(item.tietBD, item.tietKT)}
-                            </div>
-                            <div className="class-location">
-                              Phòng: {item.phongHoc}
-                            </div>
-                            <div className="class-teacher">
-                              GV: {item.tenGiangVien}
-                            </div>
-                          </div>
-                        ))}
-                      </td>
-                    ))}
-                  </tr>
-                  {/* Afternoon */}
-                  <tr>
-                    <td className="time-period">Chiều</td>
-                    {groupedSchedule.map((dayGroup, dayIndex) => (
-                      <td key={dayIndex} className="schedule-cell">
-                        {dayGroup.afternoon.map((item, itemIndex) => (
-                          <div key={itemIndex} className="class-item">
-                            <div className="class-name">{item.tenMH}</div>
-                            <div className="class-code">
-                              {item.maLopHP} - {item.maMH}
-                            </div>
-                            <div className="class-time">
-                              {getTietDisplay(item.tietBD, item.tietKT)}
-                            </div>
-                            <div className="class-location">
-                              Phòng: {item.phongHoc}
-                            </div>
-                            <div className="class-teacher">
-                              GV: {item.tenGiangVien}
-                            </div>
-                          </div>
-                        ))}
-                      </td>
-                    ))}
-                  </tr>
-                  {/* Evening */}
-                  <tr>
-                    <td className="time-period">Tối</td>
-                    {groupedSchedule.map((dayGroup, dayIndex) => (
-                      <td key={dayIndex} className="schedule-cell">
-                        {dayGroup.evening.map((item, itemIndex) => (
-                          <div key={itemIndex} className="class-item">
-                            <div className="class-name">{item.tenMH}</div>
-                            <div className="class-code">
-                              {item.maLopHP} - {item.maMH}
-                            </div>
-                            <div className="class-time">
-                              {getTietDisplay(item.tietBD, item.tietKT)}
-                            </div>
-                            <div className="class-location">
-                              Phòng: {item.phongHoc}
-                            </div>
-                            <div className="class-teacher">
-                              GV: {item.tenGiangVien}
-                            </div>
-                          </div>
-                        ))}
-                      </td>
-                    ))}
-                  </tr>
+                  {timeRows.map(({ label, slot }) => (
+                    <tr key={slot}>
+                      <td className="time-period">{label}</td>
+                      {groupedSchedule.map((dayGroup, dayIndex) => (
+                        <td key={dayIndex} className="schedule-cell">
+                          {dayGroup[slot].map((item, itemIndex) => (
+                            <ClassItem
+                              key={item.scheduleId || `${slot}-${dayIndex}-${itemIndex}`}
+                              item={item}
+                            />
+                          ))}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

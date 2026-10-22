@@ -42,7 +42,7 @@ const ParticipantsList = ({ request, onClose }) => {
         <div className="modal-subtitle">
           <span className="course-name">{request.courseName}</span>
           <span className="participant-count">
-            ({request.participantCount} sinh viên)
+            ({request.participants.length} sinh viên)
           </span>
         </div>
 

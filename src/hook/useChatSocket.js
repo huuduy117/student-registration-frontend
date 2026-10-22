@@ -35,7 +35,11 @@ const useChatSocket = (roomId) => {
 
     fetchChatHistory(roomId);
 
-    socket.current = new WebSocket(`${WS_URL}/chat/${roomId}`);
+    const token = localStorage.getItem("authToken");
+    const socketUrl = `${WS_URL}/chat/${roomId}${
+      token ? `?token=${encodeURIComponent(token)}` : ""
+    }`;
+    socket.current = new WebSocket(socketUrl);
 
     socket.current.onopen = () => {
       console.log(`Connected to chat room ${roomId}`);

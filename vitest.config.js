@@ -1,15 +1,13 @@
-import { defineConfig } from 'vitest';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from "vitest/config";
 
 export default defineConfig({
-  plugins: [react()],
   test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/test/setupTests.js',
+    environment: "node",
+    include: ["src/**/*.test.js"],
     coverage: {
-      reporter: ['text', 'json', 'html'],
-      exclude: ['node_modules', 'src/test'],
+      provider: "v8",
+      reporter: ["text", "html"],
+      include: ["src/utils/**/*.js"],
     },
   },
 });

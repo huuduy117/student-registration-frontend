@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../services/axios";
+import { unwrapList } from "../utils/apiPayload";
 import ClassRequestTicket from "./Chat/ClassRequestTicket";
 import JoinClassForm from "./Chat/JoinClassForm";
 import ParticipantsList from "./Chat/ParticipantsList";
@@ -24,16 +25,15 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
       setPinnedRequests(JSON.parse(savedPinnedRequests));
     }
 
-    // Fetch class requests and available courses
+    // Fetch class requests
     fetchClassRequests();
-    fetchAvailableCourses();
   }, []);
 
   const fetchClassRequests = async () => {
     try {
       setLoading(true);
       const response = await axiosInstance.get("/api/class-requests");
-      setClassRequests(response.data);
+      setClassRequests(unwrapList(response.data));
     } catch (error) {
       console.error("Error fetching class requests:", error);
     } finally {
@@ -41,47 +41,38 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
     }
   };
 
-  const fetchAvailableCourses = async () => {
-    try {
-      await axiosInstance.get("/api/class-requests/available-courses");
-    } catch (error) {
-      console.error("Error fetching available courses:", error);
+  const joinSection = async (sectionId) => {
+    if (!userId) {
+      setErrorMessage("Không tìm thấy thông tin sinh viên");
+      console.error("Missing userId when attempting to join class");
+      return;
     }
-  };
 
-  const handleJoinRequest = async (requestId) => {
+    if (!sectionId) {
+      alert("Lớp học phần chưa được khởi tạo");
+      return;
+    }
+
     try {
-      if (!userId) {
-        setErrorMessage("Không tìm thấy thông tin sinh viên");
-        console.error("Missing userId when attempting to join class");
-        return;
-      }
-
-      const request = classRequests.find((req) => req.id === requestId);
-      const sectionId = request?.course_sections?.id;
-      if (!sectionId) return alert("Lớp học phần chưa được khởi tạo");
-
-      const response = await axiosInstance.post("/api/class-requests/join", {
-        studentId: userId,
-        sectionId: sectionId,
-      });
+      await axiosInstance.post("/api/students/enroll", { sectionId });
 
       // Refresh the class requests
       fetchClassRequests();
+      setShowJoinForm(false);
       setErrorMessage("");
 
-      // Show success message
-      if (response.data.approved) {
-        alert("Tham gia lớp học thành công. Lớp học đã đủ điều kiện mở!");
-      } else {
-        alert("Tham gia lớp học thành công!");
-      }
+      alert("Tham gia lớp học thành công!");
     } catch (error) {
       const msg = error.response?.data?.message || "Lỗi khi tham gia lớp học";
       setErrorMessage(msg);
       console.error("Error joining class request:", error);
       alert(msg);
     }
+  };
+
+  const handleJoinRequest = async (requestId) => {
+    const request = classRequests.find((req) => req.id === requestId);
+    await joinSection(request?.course_sections?.id);
   };
 
   const handleViewParticipants = async (requestId) => {
@@ -99,7 +90,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
           id: request.id,
           courseName: request.courses?.name || request.course_id,
           participantCount: request.participant_count,
-          participants: response.data.map((p) => ({
+          participants: unwrapList(response.data).map((p) => ({
             studentId: p.studentId,
             fullName: p.fullName,
             class: p.className,
@@ -137,7 +128,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
           participantCount: request.participant_count,
           description: request.description,
           createdAt: request.submitted_at,
-          participants: participantsResponse.data.map((p) => ({
+          participants: unwrapList(participantsResponse.data).map((p) => ({
             studentId: p.studentId,
             fullName: p.fullName,
             class: p.className,
@@ -153,36 +144,8 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
   };
 
   const handleJoinClassRequest = async (joinData) => {
-    try {
-      if (!userId) {
-        setErrorMessage("Không tìm thấy thông tin sinh viên");
-        console.error("Missing userId when attempting to join class");
-        return;
-      }
-
-      const response = await axiosInstance.post("/api/class-requests/join", {
-        studentId: userId,
-        sectionId:
-          selectedRequest?.sectionId || joinData.id || joinData.maLopHP,
-      });
-
-      // Refresh the class requests
-      fetchClassRequests();
-      setShowJoinForm(false);
-      setErrorMessage("");
-
-      // Show success message
-      if (response.data.approved) {
-        alert("Tham gia lớp học thành công. Lớp học đã đủ điều kiện mở!");
-      } else {
-        alert("Tham gia lớp học thành công!");
-      }
-    } catch (error) {
-      const msg = error.response?.data?.message || "Lỗi khi tham gia lớp học";
-      setErrorMessage(msg);
-      console.error("Error joining class request:", error);
-      alert(msg);
-    }
+    const sectionId = selectedRequest?.sectionId || joinData.id || joinData.maLopHP;
+    await joinSection(sectionId);
   };
 
   const handleTogglePin = (requestId) => {
@@ -243,6 +206,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
                       semester: request.course_sections?.semester || "",
                       batch: request.course_sections?.academic_year || "",
                       participantCount: request.participant_count,
+                      enrolledCount: request.course_sections?.enrolled_count,
                       createdAt: request.submitted_at,
                     }}
                     onJoin={handleJoinRequest}
@@ -270,6 +234,7 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
                     semester: request.course_sections?.semester || "",
                     batch: request.course_sections?.academic_year || "",
                     participantCount: request.participant_count,
+                    enrolledCount: request.course_sections?.enrolled_count,
                     createdAt: request.submitted_at,
                   }}
                   onJoin={handleJoinRequest}

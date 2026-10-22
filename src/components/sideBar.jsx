@@ -6,6 +6,7 @@ import { useState } from "react";
 import "../assets/SideBar.css";
 import { useSessionMonitor } from "../hook/useSession";
 import { normalizeRole } from "../utils/roleUtils";
+import axiosInstance from "../services/axios";
 
 export default function SideBar() {
   const navigate = useNavigate();
@@ -17,8 +18,17 @@ export default function SideBar() {
   // Use the session monitor
   useSessionMonitor();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // Revoke the token server-side before dropping the local copy. If the
+    // request fails (offline/expired token) we still log out locally.
+    try {
+      await axiosInstance.post("/api/users/logout");
+    } catch (error) {
+      console.warn("Logout request failed:", error?.message || error);
+    }
+
     // Chỉ xóa thông tin đăng nhập của tab hiện tại
+    localStorage.removeItem("authToken");
     sessionStorage.removeItem(`auth_${tabId}`);
     navigate("/login", { replace: true });
   };

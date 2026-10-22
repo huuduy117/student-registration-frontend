@@ -169,6 +169,12 @@
   border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
+.form-hint {
+  margin: var(--space-2) 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
 @media (max-width: 768px) {
   .info-row {
     flex-direction: column;

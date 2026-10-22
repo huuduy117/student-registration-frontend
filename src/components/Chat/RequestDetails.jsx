@@ -71,7 +71,7 @@ const RequestDetails = ({ request, onClose, onJoin, currentUser }) => {
           </div>
 
           <div className="info-item">
-            👥<span className="info-label">Số lượng:</span>
+            👥<span className="info-label">Số lượng dự kiến:</span>
             <span className="info-value">
               {request.participantCount} sinh viên
             </span>
