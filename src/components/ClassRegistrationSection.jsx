@@ -63,7 +63,19 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
 
       alert("Tham gia lớp học thành công!");
     } catch (error) {
-      const msg = error.response?.data?.message || "Lỗi khi tham gia lớp học";
+      const code = error.response?.data?.error_code;
+      const enrollmentMessages = {
+        DUPLICATE_ENROLLMENT: "Bạn đã đăng ký hoặc đã học học phần này rồi.",
+        SECTION_FULL: "Lớp học phần đã đầy.",
+        SCHEDULE_CONFLICT: "Lịch học bị trùng với môn đã đăng ký.",
+        PREREQUISITE_NOT_MET: "Bạn chưa hoàn thành môn học tiên quyết.",
+        SECTION_NOT_ACTIVE: "Lớp học phần chưa mở đăng ký.",
+        STUDENT_NOT_ENROLLED: "Tài khoản sinh viên chưa ở trạng thái đang học.",
+      };
+      const msg =
+        enrollmentMessages[code] ||
+        error.response?.data?.message ||
+        "Lỗi khi tham gia lớp học";
       setErrorMessage(msg);
       console.error("Error joining class request:", error);
       alert(msg);
@@ -72,7 +84,12 @@ const ClassRegistrationSection = ({ userId, userRole }) => {
 
   const handleJoinRequest = async (requestId) => {
     const request = classRequests.find((req) => req.id === requestId);
-    await joinSection(request?.course_sections?.id);
+    const section = request?.course_sections;
+    if (section?.status && section.status !== "Active") {
+      alert("Lớp học phần chưa mở đăng ký.");
+      return;
+    }
+    await joinSection(section?.id);
   };
 
   const handleViewParticipants = async (requestId) => {

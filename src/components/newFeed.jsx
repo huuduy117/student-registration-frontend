@@ -142,9 +142,15 @@ export default function NewFeed() {
   const handleJoinRequest = async (requestId) => {
     try {
       const request = openRequests.find((req) => req.id === requestId);
-      const sectionId = request?.course_sections?.id;
+      const section = request?.course_sections;
+      const sectionId = section?.id;
       if (!sectionId) {
         return alert("Lớp học phần chưa được tạo hoặc không hợp lệ");
+      }
+      if (section.status && section.status !== "Active") {
+        const msg = "Lớp học phần chưa mở đăng ký.";
+        setErrorMessage(msg);
+        return alert(msg);
       }
 
       await api.post(
@@ -161,7 +167,17 @@ export default function NewFeed() {
         sessionStorage.setItem("openRequests", JSON.stringify(refreshed));
       }
     } catch (error) {
+      const code = error.response?.data?.error_code;
+      const enrollmentMessages = {
+        DUPLICATE_ENROLLMENT: "Bạn đã đăng ký hoặc đã học học phần này rồi.",
+        SECTION_FULL: "Lớp học phần đã đầy.",
+        SCHEDULE_CONFLICT: "Lịch học bị trùng với môn đã đăng ký.",
+        PREREQUISITE_NOT_MET: "Bạn chưa hoàn thành môn học tiên quyết.",
+        SECTION_NOT_ACTIVE: "Lớp học phần chưa mở đăng ký.",
+        STUDENT_NOT_ENROLLED: "Tài khoản sinh viên chưa ở trạng thái đang học.",
+      };
       const msg =
+        enrollmentMessages[code] ||
         error.response?.data?.message ||
         error.response?.data?.detail ||
         "Lỗi khi tham gia lớp học";
